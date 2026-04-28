@@ -373,12 +373,21 @@
 
   <script>
     (function() {
-      // ----- PÁGINAS -----
+      // ----- PÁGINAS (3ro Primaria actualizado con nueva página) -----
       const pagesData = {
-        tercero: [{ name: "Página 3ro", url: "https://jp-zeu-2007.github.io/PAGINA27/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }],
-        cuarto: [{ name: "Página 4to", url: "https://jp-zeu-2007.github.io/PAGINA025/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }],
-        quinto: [{ name: "VR VEX 5to", url: "https://vr.vex.com/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }],
-        sexto: [{ name: "Página 6to", url: "https://jp-zeu-2007.github.io/PAGINA26/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }],
+        tercero: [
+          { name: "Página 3ro (1)", url: "https://jp-zeu-2007.github.io/PAGINA27/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+          { name: "Página 3ro (2)", url: "https://jp-zeu-2007.github.io/PAGINA028/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
+        ],
+        cuarto: [
+          { name: "Página 4to", url: "https://jp-zeu-2007.github.io/PAGINA025/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
+        ],
+        quinto: [
+          { name: "VR VEX 5to", url: "https://vr.vex.com/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
+        ],
+        sexto: [
+          { name: "Página 6to", url: "https://jp-zeu-2007.github.io/PAGINA26/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
+        ],
         primeroBasico: []
       };
 
@@ -413,67 +422,41 @@
       const robot = document.getElementById('robotMascot');
       if (!robot) return;
 
-      // Frames originales (mirando izquierda por defecto)
       const frameWalk1Left = 'https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1777335422/Copilot_20260427_181603_rfn9ab.png';
-      const frameWalk2Left = 'https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v177733443/Copilot_20260427_181443_yfwoqa.png'; 
-      // Nota: el segundo frame tenía un typo, uso el correcto proporcionado:
-      const frameWalk2LeftCorrect = 'https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1777335422/Copilot_20260427_181443_yfwoqa.png';
-      
+      const frameWalk2Left = 'https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1777335422/Copilot_20260427_181443_yfwoqa.png';
       const frameDragTrail = 'https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1777335614/Copilot_20260427_181911_dydwrp.png';
       const frameJumpUp = 'https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1777335731/Copilot_20260427_182152_qh3qg3.png';
       const frameFallDown = 'https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1777335815/Copilot_20260427_182321_ypzgtd.png';
 
-      // Estado del robot
       let posX = 150, posY = 250;
       let velocityX = 0.8, velocityY = 0.3;
       const gravity = 0.25;
-      const friction = 0.98;
       let facingRight = true;
       let walkFrame = 0;
       let frameCounter = 0;
       let isDragging = false;
       let dragStartX = 0, dragStartY = 0;
       let startPosX = 0, startPosY = 0;
-      let isOnGround = true;
-      let verticalState = 'ground'; // 'ground', 'rising', 'falling'
-
-      const robotWidth = 90;
-      const robotHeight = 90;
+      let verticalState = 'ground';
+      const robotWidth = 90, robotHeight = 90;
 
       function getCurrentFrame() {
         if (isDragging) return frameDragTrail;
         if (verticalState === 'rising') return frameJumpUp;
         if (verticalState === 'falling') return frameFallDown;
-        // Caminando
-        return walkFrame === 0 ? frameWalk1Left : frameWalk2LeftCorrect;
-      }
-
-      function applyFlip(imageSrc, flip) {
-        if (!flip) return imageSrc;
-        // Para aplicar flip usamos transform CSS, no modificamos la URL.
-        return imageSrc;
+        return walkFrame === 0 ? frameWalk1Left : frameWalk2Left;
       }
 
       function updateRobotAppearance() {
         const frameSrc = getCurrentFrame();
         robot.style.backgroundImage = `url('${frameSrc}')`;
-        // Aplicar flip horizontal si mira a la derecha (los frames originales miran izquierda)
-        if (facingRight) {
-          robot.style.transform = 'scaleX(-1)';
-        } else {
-          robot.style.transform = 'scaleX(1)';
-        }
+        robot.style.transform = facingRight ? 'scaleX(-1)' : 'scaleX(1)';
       }
 
-      // Bucle de animación y física
       function physicsLoop() {
         if (!isDragging) {
-          // Gravedad
           velocityY += gravity;
-          
-          // Movimiento autónomo hacia carpetas
           const folders = document.querySelectorAll('.folder-card');
-          let targetX = posX, targetY = posY;
           let nearFolder = false;
           folders.forEach(folder => {
             const rect = folder.getBoundingClientRect();
@@ -488,101 +471,57 @@
               if (dy < -10) velocityY -= 0.15;
             }
           });
-
-          if (!nearFolder) {
-            if (Math.random() < 0.02) {
-              velocityX += (Math.random() - 0.5) * 0.4;
-            }
+          if (!nearFolder && Math.random() < 0.02) {
+            velocityX += (Math.random() - 0.5) * 0.4;
           }
-
-          // Determinar dirección visual
-          if (Math.abs(velocityX) > 0.1) {
-            facingRight = velocityX > 0;
-          }
-
-          // Limitar velocidad
+          if (Math.abs(velocityX) > 0.1) facingRight = velocityX > 0;
           const maxSpeed = 3.2;
           let spd = Math.sqrt(velocityX*velocityX + velocityY*velocityY);
           if (spd > maxSpeed) {
             velocityX = (velocityX / spd) * maxSpeed;
             velocityY = (velocityY / spd) * maxSpeed;
           }
-
-          // Actualizar posición
           posX += velocityX;
           posY += velocityY;
-
-          // Colisiones con bordes (rebote y física)
           const maxX = window.innerWidth - robotWidth;
           const maxY = window.innerHeight - robotHeight;
-          
           if (posX <= 0) { posX = 0; velocityX *= -0.6; }
           if (posX >= maxX) { posX = maxX; velocityX *= -0.6; }
-          
           if (posY >= maxY) { 
             posY = maxY; 
             velocityY = -Math.abs(velocityY) * 0.55; 
-            if (Math.abs(velocityY) < 1.2) {
-              velocityY = 0;
-              isOnGround = true;
-              verticalState = 'ground';
-            } else {
-              verticalState = 'rising';
-            }
-          } else if (posY <= 0) {
-            posY = 0; velocityY *= -0.5;
-          }
-
-          // Determinar estado vertical
+            verticalState = Math.abs(velocityY) < 1.2 ? 'ground' : 'rising';
+          } else if (posY <= 0) { posY = 0; velocityY *= -0.5; }
           if (posY < maxY - 2) {
-            if (velocityY < -0.3) verticalState = 'rising';
-            else if (velocityY > 0.5) verticalState = 'falling';
-            else if (Math.abs(velocityY) < 0.3 && posY >= maxY-3) verticalState = 'ground';
-          } else {
-            verticalState = 'ground';
-          }
-
-          // Animación de caminata
+            verticalState = velocityY < -0.3 ? 'rising' : (velocityY > 0.5 ? 'falling' : verticalState);
+          } else verticalState = 'ground';
           if (verticalState === 'ground' && Math.abs(velocityX) > 0.3) {
             frameCounter++;
-            if (frameCounter % 10 === 0) {
-              walkFrame = walkFrame === 0 ? 1 : 0;
-            }
-          } else if (verticalState !== 'ground') {
-            walkFrame = 0;
-          }
-
+            if (frameCounter % 10 === 0) walkFrame = walkFrame === 0 ? 1 : 0;
+          } else if (verticalState !== 'ground') walkFrame = 0;
           robot.style.left = posX + 'px';
           robot.style.top = posY + 'px';
         }
         updateRobotAppearance();
       }
 
-      // Eventos de arrastre con física de lanzamiento
       function onMouseDown(e) {
         if (e.target !== robot) return;
         e.preventDefault();
         isDragging = true;
         robot.classList.add('dragging');
-        dragStartX = e.clientX;
-        dragStartY = e.clientY;
-        startPosX = posX;
-        startPosY = posY;
-        velocityX = 0; velocityY = 0;
-        verticalState = 'ground';
+        dragStartX = e.clientX; dragStartY = e.clientY;
+        startPosX = posX; startPosY = posY;
+        velocityX = 0; velocityY = 0; verticalState = 'ground';
         updateRobotAppearance();
       }
 
       function onMouseMove(e) {
         if (!isDragging) return;
         e.preventDefault();
-        const dx = e.clientX - dragStartX;
-        const dy = e.clientY - dragStartY;
-        posX = Math.min(window.innerWidth - robotWidth, Math.max(0, startPosX + dx));
-        posY = Math.min(window.innerHeight - robotHeight, Math.max(0, startPosY + dy));
-        robot.style.left = posX + 'px';
-        robot.style.top = posY + 'px';
-        // Actualizar dirección mientras arrastra
+        posX = Math.min(window.innerWidth - robotWidth, Math.max(0, startPosX + (e.clientX - dragStartX)));
+        posY = Math.min(window.innerHeight - robotHeight, Math.max(0, startPosY + (e.clientY - dragStartY)));
+        robot.style.left = posX + 'px'; robot.style.top = posY + 'px';
         if (e.clientX > dragStartX + 5) facingRight = true;
         else if (e.clientX < dragStartX - 5) facingRight = false;
       }
@@ -591,51 +530,37 @@
         if (!isDragging) return;
         isDragging = false;
         robot.classList.remove('dragging');
-        const dx = e.clientX - dragStartX;
-        const dy = e.clientY - dragStartY;
-        // Aplicar fuerza de lanzamiento
-        velocityX = dx * 0.18;
-        velocityY = dy * 0.18;
+        velocityX = (e.clientX - dragStartX) * 0.18;
+        velocityY = (e.clientY - dragStartY) * 0.18;
         verticalState = 'rising';
-        isOnGround = false;
         updateRobotAppearance();
       }
 
-      // Touch
       function onTouchStart(e) {
         if (e.target !== robot) return;
         e.preventDefault();
-        const touch = e.touches[0];
-        isDragging = true;
-        robot.classList.add('dragging');
-        dragStartX = touch.clientX;
-        dragStartY = touch.clientY;
-        startPosX = posX;
-        startPosY = posY;
+        const t = e.touches[0];
+        isDragging = true; robot.classList.add('dragging');
+        dragStartX = t.clientX; dragStartY = t.clientY;
+        startPosX = posX; startPosY = posY;
         velocityX = 0; velocityY = 0;
       }
 
       function onTouchMove(e) {
         if (!isDragging) return;
         e.preventDefault();
-        const touch = e.touches[0];
-        const dx = touch.clientX - dragStartX;
-        const dy = touch.clientY - dragStartY;
-        posX = Math.min(window.innerWidth - robotWidth, Math.max(0, startPosX + dx));
-        posY = Math.min(window.innerHeight - robotHeight, Math.max(0, startPosY + dy));
-        robot.style.left = posX + 'px';
-        robot.style.top = posY + 'px';
+        const t = e.touches[0];
+        posX = Math.min(window.innerWidth - robotWidth, Math.max(0, startPosX + (t.clientX - dragStartX)));
+        posY = Math.min(window.innerHeight - robotHeight, Math.max(0, startPosY + (t.clientY - dragStartY)));
+        robot.style.left = posX + 'px'; robot.style.top = posY + 'px';
       }
 
       function onTouchEnd(e) {
         if (!isDragging) return;
-        isDragging = false;
-        robot.classList.remove('dragging');
-        const touch = e.changedTouches[0];
-        const dx = touch.clientX - dragStartX;
-        const dy = touch.clientY - dragStartY;
-        velocityX = dx * 0.18;
-        velocityY = dy * 0.18;
+        isDragging = false; robot.classList.remove('dragging');
+        const t = e.changedTouches[0];
+        velocityX = (t.clientX - dragStartX) * 0.18;
+        velocityY = (t.clientY - dragStartY) * 0.18;
         verticalState = 'rising';
       }
 
@@ -646,10 +571,8 @@
       window.addEventListener('touchmove', onTouchMove, {passive: false});
       window.addEventListener('touchend', onTouchEnd);
 
-      // Iniciar
       updateRobotAppearance();
-      robot.style.left = posX + 'px';
-      robot.style.top = posY + 'px';
+      robot.style.left = posX + 'px'; robot.style.top = posY + 'px';
       setInterval(physicsLoop, 30);
     })();
   </script>
