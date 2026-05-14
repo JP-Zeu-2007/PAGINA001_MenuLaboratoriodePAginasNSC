@@ -277,12 +277,12 @@
       display: none;
     }
 
-    /* Mascota robot */
+    /* Mascota robot 300% más grande */
     #robotMascot {
       position: fixed;
       z-index: 999;
-      width: 90px;
-      height: 90px;
+      width: 270px;
+      height: 270px;
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
@@ -312,8 +312,8 @@
         width: 150px;
       }
       #robotMascot {
-        width: 70px;
-        height: 70px;
+        width: 210px;
+        height: 210px;
       }
     }
   </style>
@@ -373,12 +373,13 @@
 
   <script>
     (function() {
-      // ----- PÁGINAS (6to Primaria actualizado con nueva página) -----
+      // ----- PÁGINAS (3ro Primaria actualizado con nueva página) -----
       const pagesData = {
         tercero: [
           { name: "Página 3ro (1)", url: "https://jp-zeu-2007.github.io/PAGINA27/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
           { name: "Página 3ro (2)", url: "https://jp-zeu-2007.github.io/PAGINA028/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
-          { name: "Página 3ro (3)", url: "https://jp-zeu-2007.github.io/PAGINA030/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
+          { name: "Página 3ro (3)", url: "https://jp-zeu-2007.github.io/PAGINA030/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+          { name: "Página 3ro (4)", url: "https://jp-zeu-2007.github.io/PAGINA032/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
         ],
         cuarto: [
           { name: "Página 4to (1)", url: "https://jp-zeu-2007.github.io/PAGINA025/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
@@ -421,7 +422,7 @@
         document.getElementById('pagesContainer').innerHTML = '';
       };
 
-      // ----- ROBOT MASCOT CON FRAMES Y FÍSICA -----
+      // ----- ROBOT MASCOT 300% MÁS GRANDE -----
       const robot = document.getElementById('robotMascot');
       if (!robot) return;
 
@@ -441,7 +442,7 @@
       let dragStartX = 0, dragStartY = 0;
       let startPosX = 0, startPosY = 0;
       let verticalState = 'ground';
-      const robotWidth = 90, robotHeight = 90;
+      const robotWidth = 270, robotHeight = 270;
 
       function getCurrentFrame() {
         if (isDragging) return frameDragTrail;
@@ -468,10 +469,10 @@
             const dx = fx - (posX + robotWidth/2);
             const dy = fy - (posY + robotHeight/2);
             const dist = Math.sqrt(dx*dx + dy*dy);
-            if (dist < 200) {
+            if (dist < 400) {
               nearFolder = true;
-              velocityX += dx * 0.001;
-              if (dy < -10) velocityY -= 0.15;
+              velocityX += dx * 0.0005;
+              if (dy < -10) velocityY -= 0.1;
             }
           });
           if (!nearFolder && Math.random() < 0.02) {
