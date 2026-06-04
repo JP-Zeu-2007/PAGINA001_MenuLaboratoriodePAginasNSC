@@ -178,6 +178,7 @@
       margin-top: 0.3rem;
     }
 
+    .folder-2 { background: rgba(255, 215, 0, 0.3); border-color: #ffd700; }
     .folder-3 { background: rgba(180, 70, 200, 0.3); border-color: #c15dff; }
     .folder-4 { background: rgba(255, 140, 0, 0.3); border-color: #ff8c42; }
     .folder-5 { background: rgba(0, 180, 216, 0.3); border-color: #00b4d8; }
@@ -330,6 +331,12 @@
     <h1 class="main-title">Zona Del Laboratorio de Computación</h1>
 
     <div id="foldersView" class="folders-grid">
+      <div class="folder-card folder-2" onclick="openGrade('2do Primaria', 'segundo')">
+        <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+          <path d="M2 6C2 4.9 2.9 4 4 4H9L11 6H20C21.1 6 22 6.9 22 8V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6Z" fill="#ffd700" stroke="white"/>
+        </svg>
+        <span class="folder-label">2do. Primaria</span>
+      </div>
       <div class="folder-card folder-3" onclick="openGrade('3ro Primaria', 'tercero')">
         <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
           <path d="M2 6C2 4.9 2.9 4 4 4H9L11 6H20C21.1 6 22 6.9 22 8V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6Z" fill="#b44cc8" stroke="white"/>
@@ -373,8 +380,11 @@
 
   <script>
     (function() {
-      // ----- PÁGINAS (5to Primaria actualizado con Capitán Cookies) -----
+      // ----- PÁGINAS (2do Primaria agregado al inicio) -----
       const pagesData = {
+        segundo: [
+          { name: "Página 2do (1)", url: "https://jp-zeu-2007.github.io/PAGINA035/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
+        ],
         tercero: [
           { name: "Página 3ro (1)", url: "https://jp-zeu-2007.github.io/PAGINA27/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
           { name: "Página 3ro (2)", url: "https://jp-zeu-2007.github.io/PAGINA028/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
