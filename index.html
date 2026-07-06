@@ -54,14 +54,11 @@
       width: 100%;
       height: 100%;
       background: 
-        /* Grid sutil */
         linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        /* Gradiente de fondo */
         radial-gradient(ellipse at 20% 50%, rgba(120, 80, 255, 0.08) 0%, transparent 50%),
         radial-gradient(ellipse at 80% 20%, rgba(0, 180, 216, 0.06) 0%, transparent 50%),
         radial-gradient(ellipse at 50% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 50%),
-        /* Textura sutil */
         url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="0.5" fill="rgba(255,255,255,0.03)"/><circle cx="80" cy="40" r="0.3" fill="rgba(255,255,255,0.02)"/><circle cx="50" cy="70" r="0.4" fill="rgba(255,255,255,0.025)"/></svg>');
       background-size: 30px 30px, 30px 30px, 100% 100%, 100% 100%, 100% 100%, 100px 100px;
       pointer-events: none;
@@ -332,35 +329,32 @@
       box-shadow: 0 5px 20px rgba(0,0,0,0.3);
     }
 
+    /* Estilo para subcarpetas */
+    .subfolder-card {
+      background: rgba(20, 25, 45, 0.7);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 1.2rem;
+      overflow: hidden;
+      width: 170px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .subfolder-card:hover {
+      transform: translateY(-5px) scale(1.03);
+      border-color: rgba(255,255,255,0.3);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.7), 0 0 30px rgba(6, 182, 212, 0.2);
+    }
+
     .hidden {
       display: none;
-    }
-
-    /* Mascota robot 300% más grande */
-    #robotMascot {
-      position: fixed;
-      z-index: 999;
-      width: 270px;
-      height: 270px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      image-rendering: crisp-edges;
-      cursor: grab;
-      filter: drop-shadow(0 0 25px rgba(120, 80, 255, 0.5));
-      transition: filter 0.2s;
-      pointer-events: auto;
-      left: 120px;
-      top: 180px;
-      will-change: left, top, transform;
-    }
-
-    #robotMascot:active {
-      cursor: grabbing;
-    }
-
-    #robotMascot.dragging {
-      filter: drop-shadow(0 0 35px rgba(245, 158, 11, 0.8));
     }
 
     @media (max-width: 768px) {
@@ -376,12 +370,8 @@
         max-width: 150px;
         padding: 1.2rem 0.8rem;
       }
-      .page-preview {
+      .page-preview, .subfolder-card {
         width: 140px;
-      }
-      #robotMascot {
-        width: 180px;
-        height: 180px;
       }
     }
   </style>
@@ -443,11 +433,9 @@
     </div>
   </div>
 
-  <div id="robotMascot"></div>
-
   <script>
     (function() {
-      // ----- PÁGINAS (2do Primaria actualizado con nueva página) -----
+      // ----- PÁGINAS (5to Primaria con nuevo documento de videojuego) -----
       const pagesData = {
         segundo: [
           { name: "Página 2do (1)", url: "https://jp-zeu-2007.github.io/PAGINA035/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
@@ -465,12 +453,22 @@
           { name: "Página 4to (2)", url: "https://jp-zeu-2007.github.io/PAGINA029/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
           { name: "Página 4to (3)", url: "https://drive.google.com/file/d/1hQjnuExE0VexZN1nDpg4hvR2mIRHQVlZ/view?usp=sharing", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
         ],
-        quinto: [
-          { name: "VR VEX 5to", url: "https://vr.vex.com/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
-          { name: "Página 5to (2)", url: "https://jp-zeu-2007.github.io/PAGINA034/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
-          { name: "El Tesoro del Capitán Cookies 1", url: "https://jp-zeu-2007.github.io/EL-TESORO-DEL-CAPITAN-COOKIES/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
-          { name: "El Tesoro del Capitán Cookies 2", url: "https://jp-zeu-2007.github.io/EL-TESORO-DEL-CAPITAN-COOKIES2/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
-        ],
+        quinto: {
+          pages: [
+            { name: "VR VEX 5to", url: "https://vr.vex.com/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 5to (2)", url: "https://jp-zeu-2007.github.io/PAGINA034/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "El Tesoro del Capitán Cookies 1", url: "https://jp-zeu-2007.github.io/EL-TESORO-DEL-CAPITAN-COOKIES/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "El Tesoro del Capitán Cookies 2", url: "https://jp-zeu-2007.github.io/EL-TESORO-DEL-CAPITAN-COOKIES2/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "DOCUMENTO VIDEOJUEGO", url: "https://res.cloudinary.com/dmis07evg/raw/upload/v1783309248/Guia_Godot4_VideoGame_r1vplo.docx", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isVideoGame: true }
+          ],
+          subfolders: [
+            {
+              name: "Recursos Videojuego",
+              type: "image",
+              img: "https://res.cloudinary.com/dmis07evg/image/upload/v1783309247/png-clipart-character-sprite-animation-computer-software-texture-mapping-sprite-game-photography-1010965056-removebg-preview_kmyghg.png"
+            }
+          ]
+        },
         sexto: [
           { name: "Página 6to (1)", url: "https://jp-zeu-2007.github.io/PAGINA26/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
           { name: "Página 6to (2)", url: "https://jp-zeu-2007.github.io/PAGINA031/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
@@ -478,25 +476,93 @@
         primeroBasico: []
       };
 
+      const videoGamePreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="180" height="100" viewBox="0 0 180 100"><rect width="180" height="100" fill="#1a1a2e"/><text x="90" y="45" font-size="28" text-anchor="middle" fill="#e94560">🎮</text><text x="90" y="70" font-size="12" text-anchor="middle" fill="#00d2ff">VIDEOJUEGO</text></svg>');
+
       window.openGrade = function(gradeName, gradeKey) {
         document.getElementById('foldersView').classList.add('hidden');
         document.getElementById('previewPanel').classList.remove('hidden');
         document.getElementById('gradeTitle').innerHTML = `📌 ${gradeName}`;
         const container = document.getElementById('pagesContainer');
         container.innerHTML = '';
-        const pages = pagesData[gradeKey] || [];
-        if (pages.length === 0) {
+        
+        const data = pagesData[gradeKey];
+        
+        if (!data || (Array.isArray(data) && data.length === 0) || (data && data.pages && data.pages.length === 0 && (!data.subfolders || data.subfolders.length === 0))) {
           container.innerHTML = '<p style="color:#b4c0e0;width:100%;text-align:center;padding:2rem;font-family:Outfit,sans-serif;">✨ Próximamente más páginas aquí.</p>';
           return;
         }
-        pages.forEach(page => {
-          const a = document.createElement('a');
-          a.href = page.url; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.className = 'page-preview';
-          const img = document.createElement('img'); img.src = page.img; img.alt = page.name; img.className = 'preview-img';
-          img.onerror = function() { this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="180" height="100"%3E%3Crect width="180" height="100" fill="%231a2040"/%3E%3Ctext x="90" y="55" fill="%23b4c0e0" text-anchor="middle" font-family="Outfit"%3E🌐 Vista previa%3C/text%3E%3C/svg%3E'; };
-          const info = document.createElement('div'); info.className = 'preview-info'; info.textContent = page.name;
-          a.appendChild(img); a.appendChild(info); container.appendChild(a);
-        });
+
+        if (data && data.pages) {
+          data.pages.forEach(page => {
+            const a = document.createElement('a');
+            a.href = page.url;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.className = 'page-preview';
+            
+            const img = document.createElement('img');
+            img.src = page.isVideoGame ? videoGamePreviewImg : page.img;
+            img.alt = page.name;
+            img.className = 'preview-img';
+            img.onerror = function() { this.src = videoGamePreviewImg; };
+            
+            const info = document.createElement('div');
+            info.className = 'preview-info';
+            info.textContent = page.name;
+            
+            a.appendChild(img);
+            a.appendChild(info);
+            container.appendChild(a);
+          });
+
+          if (data.subfolders) {
+            data.subfolders.forEach(sub => {
+              const div = document.createElement('div');
+              div.className = 'subfolder-card';
+              div.onclick = function() {
+                if (sub.type === 'image') {
+                  window.open(sub.img, '_blank');
+                }
+              };
+              
+              const img = document.createElement('img');
+              img.src = sub.img;
+              img.alt = sub.name;
+              img.className = 'preview-img';
+              img.onerror = function() { this.src = videoGamePreviewImg; };
+              
+              const info = document.createElement('div');
+              info.className = 'preview-info';
+              info.textContent = '📁 ' + sub.name;
+              
+              div.appendChild(img);
+              div.appendChild(info);
+              container.appendChild(div);
+            });
+          }
+        } else if (Array.isArray(data)) {
+          data.forEach(page => {
+            const a = document.createElement('a');
+            a.href = page.url;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.className = 'page-preview';
+            
+            const img = document.createElement('img');
+            img.src = page.img;
+            img.alt = page.name;
+            img.className = 'preview-img';
+            img.onerror = function() { this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="180" height="100"%3E%3Crect width="180" height="100" fill="%231a2040"/%3E%3Ctext x="90" y="55" fill="%23b4c0e0" text-anchor="middle" font-family="Outfit"%3E🌐 Vista previa%3C/text%3E%3C/svg%3E'; };
+            
+            const info = document.createElement('div');
+            info.className = 'preview-info';
+            info.textContent = page.name;
+            
+            a.appendChild(img);
+            a.appendChild(info);
+            container.appendChild(a);
+          });
+        }
       };
 
       window.backToFolders = function() {
@@ -504,163 +570,6 @@
         document.getElementById('foldersView').classList.remove('hidden');
         document.getElementById('pagesContainer').innerHTML = '';
       };
-
-      // ----- ROBOT MASCOT 300% MÁS GRANDE -----
-      const robot = document.getElementById('robotMascot');
-      if (!robot) return;
-
-      const frameWalk1Left = 'https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1777335422/Copilot_20260427_181603_rfn9ab.png';
-      const frameWalk2Left = 'https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1777335422/Copilot_20260427_181443_yfwoqa.png';
-      const frameDragTrail = 'https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1777335614/Copilot_20260427_181911_dydwrp.png';
-      const frameJumpUp = 'https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1777335731/Copilot_20260427_182152_qh3qg3.png';
-      const frameFallDown = 'https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1777335815/Copilot_20260427_182321_ypzgtd.png';
-
-      let posX = 150, posY = 250;
-      let velocityX = 0.8, velocityY = 0.3;
-      const gravity = 0.25;
-      let facingRight = true;
-      let walkFrame = 0;
-      let frameCounter = 0;
-      let isDragging = false;
-      let dragStartX = 0, dragStartY = 0;
-      let startPosX = 0, startPosY = 0;
-      let verticalState = 'ground';
-      const robotWidth = 270, robotHeight = 270;
-
-      function getCurrentFrame() {
-        if (isDragging) return frameDragTrail;
-        if (verticalState === 'rising') return frameJumpUp;
-        if (verticalState === 'falling') return frameFallDown;
-        return walkFrame === 0 ? frameWalk1Left : frameWalk2Left;
-      }
-
-      function updateRobotAppearance() {
-        const frameSrc = getCurrentFrame();
-        robot.style.backgroundImage = `url('${frameSrc}')`;
-        robot.style.transform = facingRight ? 'scaleX(-1)' : 'scaleX(1)';
-      }
-
-      function physicsLoop() {
-        if (!isDragging) {
-          velocityY += gravity;
-          const folders = document.querySelectorAll('.folder-card');
-          let nearFolder = false;
-          folders.forEach(folder => {
-            const rect = folder.getBoundingClientRect();
-            const fx = rect.left + rect.width/2;
-            const fy = rect.top + rect.height/2;
-            const dx = fx - (posX + robotWidth/2);
-            const dy = fy - (posY + robotHeight/2);
-            const dist = Math.sqrt(dx*dx + dy*dy);
-            if (dist < 400) {
-              nearFolder = true;
-              velocityX += dx * 0.0005;
-              if (dy < -10) velocityY -= 0.1;
-            }
-          });
-          if (!nearFolder && Math.random() < 0.02) {
-            velocityX += (Math.random() - 0.5) * 0.4;
-          }
-          if (Math.abs(velocityX) > 0.1) facingRight = velocityX > 0;
-          const maxSpeed = 3.2;
-          let spd = Math.sqrt(velocityX*velocityX + velocityY*velocityY);
-          if (spd > maxSpeed) {
-            velocityX = (velocityX / spd) * maxSpeed;
-            velocityY = (velocityY / spd) * maxSpeed;
-          }
-          posX += velocityX;
-          posY += velocityY;
-          const maxX = window.innerWidth - robotWidth;
-          const maxY = window.innerHeight - robotHeight;
-          if (posX <= 0) { posX = 0; velocityX *= -0.6; }
-          if (posX >= maxX) { posX = maxX; velocityX *= -0.6; }
-          if (posY >= maxY) { 
-            posY = maxY; 
-            velocityY = -Math.abs(velocityY) * 0.55; 
-            verticalState = Math.abs(velocityY) < 1.2 ? 'ground' : 'rising';
-          } else if (posY <= 0) { posY = 0; velocityY *= -0.5; }
-          if (posY < maxY - 2) {
-            verticalState = velocityY < -0.3 ? 'rising' : (velocityY > 0.5 ? 'falling' : verticalState);
-          } else verticalState = 'ground';
-          if (verticalState === 'ground' && Math.abs(velocityX) > 0.3) {
-            frameCounter++;
-            if (frameCounter % 10 === 0) walkFrame = walkFrame === 0 ? 1 : 0;
-          } else if (verticalState !== 'ground') walkFrame = 0;
-          robot.style.left = posX + 'px';
-          robot.style.top = posY + 'px';
-        }
-        updateRobotAppearance();
-      }
-
-      function onMouseDown(e) {
-        if (e.target !== robot) return;
-        e.preventDefault();
-        isDragging = true;
-        robot.classList.add('dragging');
-        dragStartX = e.clientX; dragStartY = e.clientY;
-        startPosX = posX; startPosY = posY;
-        velocityX = 0; velocityY = 0; verticalState = 'ground';
-        updateRobotAppearance();
-      }
-
-      function onMouseMove(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        posX = Math.min(window.innerWidth - robotWidth, Math.max(0, startPosX + (e.clientX - dragStartX)));
-        posY = Math.min(window.innerHeight - robotHeight, Math.max(0, startPosY + (e.clientY - dragStartY)));
-        robot.style.left = posX + 'px'; robot.style.top = posY + 'px';
-        if (e.clientX > dragStartX + 5) facingRight = true;
-        else if (e.clientX < dragStartX - 5) facingRight = false;
-      }
-
-      function onMouseUp(e) {
-        if (!isDragging) return;
-        isDragging = false;
-        robot.classList.remove('dragging');
-        velocityX = (e.clientX - dragStartX) * 0.18;
-        velocityY = (e.clientY - dragStartY) * 0.18;
-        verticalState = 'rising';
-        updateRobotAppearance();
-      }
-
-      function onTouchStart(e) {
-        if (e.target !== robot) return;
-        e.preventDefault();
-        const t = e.touches[0];
-        isDragging = true; robot.classList.add('dragging');
-        dragStartX = t.clientX; dragStartY = t.clientY;
-        startPosX = posX; startPosY = posY;
-        velocityX = 0; velocityY = 0;
-      }
-
-      function onTouchMove(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        const t = e.touches[0];
-        posX = Math.min(window.innerWidth - robotWidth, Math.max(0, startPosX + (t.clientX - dragStartX)));
-        posY = Math.min(window.innerHeight - robotHeight, Math.max(0, startPosY + (t.clientY - dragStartY)));
-        robot.style.left = posX + 'px'; robot.style.top = posY + 'px';
-      }
-
-      function onTouchEnd(e) {
-        if (!isDragging) return;
-        isDragging = false; robot.classList.remove('dragging');
-        const t = e.changedTouches[0];
-        velocityX = (t.clientX - dragStartX) * 0.18;
-        velocityY = (t.clientY - dragStartY) * 0.18;
-        verticalState = 'rising';
-      }
-
-      robot.addEventListener('mousedown', onMouseDown);
-      window.addEventListener('mousemove', onMouseMove);
-      window.addEventListener('mouseup', onMouseUp);
-      robot.addEventListener('touchstart', onTouchStart, {passive: false});
-      window.addEventListener('touchmove', onTouchMove, {passive: false});
-      window.addEventListener('touchend', onTouchEnd);
-
-      updateRobotAppearance();
-      robot.style.left = posX + 'px'; robot.style.top = posY + 'px';
-      setInterval(physicsLoop, 30);
     })();
   </script>
 </body>
