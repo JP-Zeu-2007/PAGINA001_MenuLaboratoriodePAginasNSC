@@ -220,6 +220,8 @@
     .folder-6 .folder-icon path { fill: #ef4444; }
     .folder-1b { border-left: 3px solid #10b981; }
     .folder-1b .folder-icon path { fill: #10b981; }
+    .folder-3b { border-left: 3px solid #14b8a6; }
+    .folder-3b .folder-icon path { fill: #14b8a6; }
 
     .preview-panel {
       width: 100%;
@@ -304,6 +306,27 @@
       letter-spacing: 0.3px;
       color: var(--text-secondary);
       font-family: 'Outfit', sans-serif;
+    }
+
+    .download-button {
+      background: rgba(20, 180, 160, 0.2);
+      border: 1px solid rgba(20, 180, 160, 0.4);
+      color: #5eead4;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.8rem;
+      margin: 0.3rem 0.5rem 0.5rem;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.75rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .download-button:hover {
+      background: rgba(20, 180, 160, 0.3);
+      border-color: rgba(20, 180, 160, 0.6);
+      color: #99f6e4;
     }
 
     .back-button {
@@ -424,6 +447,12 @@
         </svg>
         <span class="folder-label">1ro. Básico</span>
       </div>
+      <div class="folder-card folder-3b" onclick="openGrade('3ro. Básico', 'terceroBasico')">
+        <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+          <path d="M2 6C2 4.9 2.9 4 4 4H9L11 6H20C21.1 6 22 6.9 22 8V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6Z" fill="#14b8a6" stroke="white"/>
+        </svg>
+        <span class="folder-label">3ro. Básico</span>
+      </div>
     </div>
 
     <div id="previewPanel" class="preview-panel hidden">
@@ -435,7 +464,7 @@
 
   <script>
     (function() {
-      // ----- PÁGINAS (5to Primaria con nuevo documento de videojuego) -----
+      // ----- PÁGINAS (3ro. Básico con vista previa de PDF y descarga) -----
       const pagesData = {
         segundo: [
           { name: "Página 2do (1)", url: "https://jp-zeu-2007.github.io/PAGINA035/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
@@ -473,10 +502,20 @@
           { name: "Página 6to (1)", url: "https://jp-zeu-2007.github.io/PAGINA26/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
           { name: "Página 6to (2)", url: "https://jp-zeu-2007.github.io/PAGINA031/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
         ],
-        primeroBasico: []
+        primeroBasico: [],
+        terceroBasico: [
+          { 
+            name: "Documento 3ro. Básico", 
+            url: "https://drive.google.com/file/d/1aXOtATzAUtPg-N5ZUkO2s1-mkwdt2gS-/view?usp=sharing", 
+            img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png",
+            isPDF: true 
+          }
+        ]
       };
 
       const videoGamePreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="180" height="100" viewBox="0 0 180 100"><rect width="180" height="100" fill="#1a1a2e"/><text x="90" y="45" font-size="28" text-anchor="middle" fill="#e94560">🎮</text><text x="90" y="70" font-size="12" text-anchor="middle" fill="#00d2ff">VIDEOJUEGO</text></svg>');
+
+      const pdfPreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="180" height="100" viewBox="0 0 180 100"><rect width="180" height="100" fill="#1a2744"/><text x="90" y="45" font-size="28" text-anchor="middle" fill="#ef4444">📕</text><text x="90" y="70" font-size="12" text-anchor="middle" fill="#fca5a5">PDF</text></svg>');
 
       window.openGrade = function(gradeName, gradeKey) {
         document.getElementById('foldersView').classList.add('hidden');
@@ -542,6 +581,13 @@
           }
         } else if (Array.isArray(data)) {
           data.forEach(page => {
+            // Crear contenedor para la tarjeta
+            const cardContainer = document.createElement('div');
+            cardContainer.style.display = 'flex';
+            cardContainer.style.flexDirection = 'column';
+            cardContainer.style.alignItems = 'center';
+            
+            // Enlace para vista previa
             const a = document.createElement('a');
             a.href = page.url;
             a.target = '_blank';
@@ -549,10 +595,10 @@
             a.className = 'page-preview';
             
             const img = document.createElement('img');
-            img.src = page.img;
+            img.src = page.isPDF ? pdfPreviewImg : page.img;
             img.alt = page.name;
             img.className = 'preview-img';
-            img.onerror = function() { this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="180" height="100"%3E%3Crect width="180" height="100" fill="%231a2040"/%3E%3Ctext x="90" y="55" fill="%23b4c0e0" text-anchor="middle" font-family="Outfit"%3E🌐 Vista previa%3C/text%3E%3C/svg%3E'; };
+            img.onerror = function() { this.src = pdfPreviewImg; };
             
             const info = document.createElement('div');
             info.className = 'preview-info';
@@ -560,7 +606,24 @@
             
             a.appendChild(img);
             a.appendChild(info);
-            container.appendChild(a);
+            cardContainer.appendChild(a);
+            
+            // Botón de descarga para PDF
+            if (page.isPDF) {
+              const downloadBtn = document.createElement('button');
+              downloadBtn.className = 'download-button';
+              downloadBtn.textContent = '⬇ Descargar';
+              downloadBtn.onclick = function(e) {
+                e.stopPropagation();
+                const fileId = page.url.match(/\/d\/(.*?)\//)?.[1];
+                if (fileId) {
+                  window.open(`https://drive.google.com/uc?export=download&id=${fileId}`, '_blank');
+                }
+              };
+              cardContainer.appendChild(downloadBtn);
+            }
+            
+            container.appendChild(cardContainer);
           });
         }
       };
