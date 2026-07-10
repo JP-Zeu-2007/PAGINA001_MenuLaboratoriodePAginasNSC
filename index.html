@@ -464,11 +464,12 @@
 
   <script>
     (function() {
-      // ----- PÁGINAS (3ro. Básico con vista previa de PDF y descarga) -----
+      // ----- PÁGINAS (2do Primaria actualizado con nueva página) -----
       const pagesData = {
         segundo: [
           { name: "Página 2do (1)", url: "https://jp-zeu-2007.github.io/PAGINA035/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
-          { name: "Página 2do (2)", url: "https://jp-zeu-2007.github.io/PAGINA037/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
+          { name: "Página 2do (2)", url: "https://jp-zeu-2007.github.io/PAGINA037/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+          { name: "Página 2do (3)", url: "https://jp-zeu-2007.github.io/PAGINA038/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
         ],
         tercero: [
           { name: "Página 3ro (1)", url: "https://jp-zeu-2007.github.io/PAGINA27/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
@@ -581,13 +582,11 @@
           }
         } else if (Array.isArray(data)) {
           data.forEach(page => {
-            // Crear contenedor para la tarjeta
             const cardContainer = document.createElement('div');
             cardContainer.style.display = 'flex';
             cardContainer.style.flexDirection = 'column';
             cardContainer.style.alignItems = 'center';
             
-            // Enlace para vista previa
             const a = document.createElement('a');
             a.href = page.url;
             a.target = '_blank';
@@ -608,7 +607,6 @@
             a.appendChild(info);
             cardContainer.appendChild(a);
             
-            // Botón de descarga para PDF
             if (page.isPDF) {
               const downloadBtn = document.createElement('button');
               downloadBtn.className = 'download-button';
