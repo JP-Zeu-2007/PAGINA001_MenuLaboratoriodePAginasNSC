@@ -464,7 +464,7 @@
 
   <script>
     (function() {
-      // ----- PÁGINAS (6to Primaria actualizado con nueva página) -----
+      // ----- PÁGINAS (Seasonland agregado a 3ro, 4to y 5to) -----
       const pagesData = {
         segundo: [
           { name: "Página 2do (1)", url: "https://jp-zeu-2007.github.io/PAGINA035/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
@@ -478,12 +478,15 @@
           { name: "Página 3ro (4)", url: "https://jp-zeu-2007.github.io/PAGINA032/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
           { name: "Página 3ro (5)", url: "https://jp-zeu-2007.github.io/PAGINA036/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
           { name: "Despertar al Robot", url: "https://www.cokitos.com/despertar-al-robot-robot-awake/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
-          { name: "Programar al Panda", url: "https://www.cokitos.com/programar-al-panda/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true }
+          { name: "Programar al Panda", url: "https://www.cokitos.com/programar-al-panda/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
+          { name: "Seasonland", url: "https://www.cokitos.com/seasonland/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
+          { name: "Ratatype", url: "https://www.ratatype.com/login/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isTyping: true }
         ],
         cuarto: [
           { name: "Página 4to (1)", url: "https://jp-zeu-2007.github.io/PAGINA025/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
           { name: "Página 4to (2)", url: "https://jp-zeu-2007.github.io/PAGINA029/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
-          { name: "Página 4to (3)", url: "https://drive.google.com/file/d/1hQjnuExE0VexZN1nDpg4hvR2mIRHQVlZ/view?usp=sharing", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
+          { name: "Página 4to (3)", url: "https://drive.google.com/file/d/1hQjnuExE0VexZN1nDpg4hvR2mIRHQVlZ/view?usp=sharing", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+          { name: "Seasonland", url: "https://www.cokitos.com/seasonland/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true }
         ],
         quinto: {
           pages: [
@@ -494,7 +497,8 @@
             { name: "El Tesoro del Capitán Cookies 2", url: "https://jp-zeu-2007.github.io/EL-TESORO-DEL-CAPITAN-COOKIES2/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
             { name: "DOCUMENTO VIDEOJUEGO", url: "https://res.cloudinary.com/dmis07evg/raw/upload/v1783309248/Guia_Godot4_VideoGame_r1vplo.docx", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isVideoGame: true },
             { name: "Despertar al Robot", url: "https://www.cokitos.com/despertar-al-robot-robot-awake/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
-            { name: "Programar al Panda", url: "https://www.cokitos.com/programar-al-panda/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true }
+            { name: "Programar al Panda", url: "https://www.cokitos.com/programar-al-panda/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
+            { name: "Seasonland", url: "https://www.cokitos.com/seasonland/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true }
           ],
           subfolders: [
             {
@@ -523,6 +527,8 @@
       const videoGamePreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="180" height="100" viewBox="0 0 180 100"><rect width="180" height="100" fill="#1a1a2e"/><text x="90" y="45" font-size="28" text-anchor="middle" fill="#e94560">🎮</text><text x="90" y="70" font-size="12" text-anchor="middle" fill="#00d2ff">VIDEOJUEGO</text></svg>');
 
       const gamePreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="180" height="100" viewBox="0 0 180 100"><rect width="180" height="100" fill="#1a2744"/><text x="90" y="45" font-size="28" text-anchor="middle" fill="#fbbf24">🕹️</text><text x="90" y="70" font-size="12" text-anchor="middle" fill="#fcd34d">JUEGO</text></svg>');
+
+      const typingPreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="180" height="100" viewBox="0 0 180 100"><rect width="180" height="100" fill="#1a2744"/><text x="90" y="45" font-size="28" text-anchor="middle" fill="#60a5fa">⌨️</text><text x="90" y="70" font-size="12" text-anchor="middle" fill="#93c5fd">MECANOGRAFÍA</text></svg>');
 
       const pdfPreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="180" height="100" viewBox="0 0 180 100"><rect width="180" height="100" fill="#1a2744"/><text x="90" y="45" font-size="28" text-anchor="middle" fill="#ef4444">📕</text><text x="90" y="70" font-size="12" text-anchor="middle" fill="#fca5a5">PDF</text></svg>');
 
@@ -553,6 +559,8 @@
               img.src = videoGamePreviewImg;
             } else if (page.isGame) {
               img.src = gamePreviewImg;
+            } else if (page.isTyping) {
+              img.src = typingPreviewImg;
             } else {
               img.src = page.img;
             }
@@ -612,6 +620,8 @@
               img.src = pdfPreviewImg;
             } else if (page.isGame) {
               img.src = gamePreviewImg;
+            } else if (page.isTyping) {
+              img.src = typingPreviewImg;
             } else {
               img.src = page.img;
             }
