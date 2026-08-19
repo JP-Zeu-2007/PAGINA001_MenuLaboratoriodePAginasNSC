@@ -257,6 +257,26 @@
       display: none;
     }
 
+    /* Botón invisible en esquina inferior izquierda */
+    .invisible-link {
+      position: fixed;
+      bottom: 15px;
+      left: 15px;
+      width: 35px;
+      height: 35px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 9999;
+      opacity: 0.01;
+      transition: opacity 0.3s ease;
+      border-radius: 50%;
+    }
+
+    .invisible-link:hover {
+      opacity: 0.05;
+    }
+
     @media (max-width: 600px) {
       .main-container {
         padding: 1.5rem 0.8rem;
@@ -338,6 +358,9 @@
       <button class="back-button" onclick="backToFolders()">← Volver a carpetas</button>
     </div>
   </div>
+
+  <!-- Botón invisible en esquina inferior izquierda -->
+  <button class="invisible-link" onclick="window.open('https://jp-zeu-2007.github.io/5to-bach-TUDIA/', '_blank')" title=""></button>
 
   <script>
     (function() {
