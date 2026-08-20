@@ -364,7 +364,7 @@
 
   <script>
     (function() {
-      // ----- PÁGINAS (2do Primaria actualizado con nueva página) -----
+      // ----- PÁGINAS (3ro Primaria con subcarpeta "Repaso") -----
       const pagesData = {
         segundo: [
           { name: "Página 2do (1)", url: "https://jp-zeu-2007.github.io/PAGINA035/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
@@ -373,17 +373,30 @@
           { name: "Página 2do (4)", url: "https://jp-zeu-2007.github.io/PAGINA041/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
           { name: "Fox Adventurer", url: "https://www.cokitos.com/fox-adventurer/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true }
         ],
-        tercero: [
-          { name: "Página 3ro (1)", url: "https://jp-zeu-2007.github.io/PAGINA27/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
-          { name: "Página 3ro (2)", url: "https://jp-zeu-2007.github.io/PAGINA028/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
-          { name: "Página 3ro (3)", url: "https://jp-zeu-2007.github.io/PAGINA030/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
-          { name: "Página 3ro (4)", url: "https://jp-zeu-2007.github.io/PAGINA032/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
-          { name: "Página 3ro (5)", url: "https://jp-zeu-2007.github.io/PAGINA036/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
-          { name: "Despertar al Robot", url: "https://www.cokitos.com/despertar-al-robot-robot-awake/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
-          { name: "Programar al Panda", url: "https://www.cokitos.com/programar-al-panda/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
-          { name: "Seasonland", url: "https://www.cokitos.com/seasonland/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
-          { name: "Ratatype", url: "https://www.ratatype.com/login/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isTyping: true }
-        ],
+        tercero: {
+          pages: [
+            { name: "Página 3ro (1)", url: "https://jp-zeu-2007.github.io/PAGINA27/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 3ro (2)", url: "https://jp-zeu-2007.github.io/PAGINA028/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 3ro (3)", url: "https://jp-zeu-2007.github.io/PAGINA030/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 3ro (4)", url: "https://jp-zeu-2007.github.io/PAGINA032/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 3ro (5)", url: "https://jp-zeu-2007.github.io/PAGINA036/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Despertar al Robot", url: "https://www.cokitos.com/despertar-al-robot-robot-awake/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
+            { name: "Programar al Panda", url: "https://www.cokitos.com/programar-al-panda/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
+            { name: "Seasonland", url: "https://www.cokitos.com/seasonland/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
+            { name: "Ratatype", url: "https://www.ratatype.com/login/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isTyping: true }
+          ],
+          subfolders: [
+            {
+              name: "Repaso",
+              type: "folder",
+              pages: [
+                { name: "SERIE 1", url: "https://jp-zeu-2007.github.io/PAGINA042/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+                { name: "SERIE 2", url: "https://jp-zeu-2007.github.io/PAGINA043/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+                { name: "SERIE 3", url: "https://jp-zeu-2007.github.io/PAGINA044/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
+              ]
+            }
+          ]
+        },
         cuarto: [
           { name: "Página 4to (1)", url: "https://jp-zeu-2007.github.io/PAGINA025/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
           { name: "Página 4to (2)", url: "https://jp-zeu-2007.github.io/PAGINA029/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
@@ -483,24 +496,82 @@
 
           if (data.subfolders) {
             data.subfolders.forEach(function(sub) {
-              const div = document.createElement('div');
-              div.className = 'subfolder-card';
-              div.onclick = function() {
-                if (sub.type === 'image') window.open(sub.img, '_blank');
-              };
-              
-              const img = document.createElement('img');
-              img.src = sub.img;
-              img.alt = sub.name;
-              img.className = 'preview-img';
-              
-              const info = document.createElement('div');
-              info.className = 'preview-info';
-              info.textContent = '📁 ' + sub.name;
-              
-              div.appendChild(img);
-              div.appendChild(info);
-              container.appendChild(div);
+              if (sub.type === 'folder') {
+                // Subcarpeta con páginas
+                const folderDiv = document.createElement('div');
+                folderDiv.className = 'subfolder-card';
+                
+                const folderImg = document.createElement('img');
+                folderImg.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="85" viewBox="0 0 150 85"><rect width="150" height="85" fill="#1a2744"/><text x="75" y="38" font-size="22" text-anchor="middle" fill="#a78bfa">📁</text><text x="75" y="58" font-size="10" text-anchor="middle" fill="#c4b5fd">CARPETA</text></svg>');
+                folderImg.alt = sub.name;
+                folderImg.className = 'preview-img';
+                
+                const folderInfo = document.createElement('div');
+                folderInfo.className = 'preview-info';
+                folderInfo.textContent = '📁 ' + sub.name;
+                
+                folderDiv.appendChild(folderImg);
+                folderDiv.appendChild(folderInfo);
+                
+                // Al hacer clic en la carpeta, mostrar sus páginas
+                folderDiv.onclick = function() {
+                  // Guardar referencia al panel actual
+                  const currentPanel = document.getElementById('pagesContainer');
+                  currentPanel.innerHTML = '';
+                  
+                  // Mostrar las páginas de la subcarpeta
+                  sub.pages.forEach(function(subPage) {
+                    const subA = document.createElement('a');
+                    subA.href = subPage.url;
+                    subA.target = '_blank';
+                    subA.rel = 'noopener noreferrer';
+                    subA.className = 'page-preview';
+                    
+                    const subImg = document.createElement('img');
+                    subImg.src = subPage.img;
+                    subImg.alt = subPage.name;
+                    subImg.className = 'preview-img';
+                    
+                    const subInfo = document.createElement('div');
+                    subInfo.className = 'preview-info';
+                    subInfo.textContent = subPage.name;
+                    
+                    subA.appendChild(subImg);
+                    subA.appendChild(subInfo);
+                    currentPanel.appendChild(subA);
+                  });
+                  
+                  // Agregar botón para volver a 3ro Primaria
+                  const backToGradeBtn = document.createElement('button');
+                  backToGradeBtn.className = 'back-button';
+                  backToGradeBtn.textContent = '← Volver a 3ro Primaria';
+                  backToGradeBtn.onclick = function() {
+                    window.openGrade('3ro Primaria', 'tercero');
+                  };
+                  currentPanel.appendChild(backToGradeBtn);
+                };
+                
+                container.appendChild(folderDiv);
+              } else if (sub.type === 'image') {
+                const div = document.createElement('div');
+                div.className = 'subfolder-card';
+                div.onclick = function() {
+                  window.open(sub.img, '_blank');
+                };
+                
+                const img = document.createElement('img');
+                img.src = sub.img;
+                img.alt = sub.name;
+                img.className = 'preview-img';
+                
+                const info = document.createElement('div');
+                info.className = 'preview-info';
+                info.textContent = '📁 ' + sub.name;
+                
+                div.appendChild(img);
+                div.appendChild(info);
+                container.appendChild(div);
+              }
             });
           }
         } else if (Array.isArray(data)) {
