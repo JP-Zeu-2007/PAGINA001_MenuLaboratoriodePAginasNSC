@@ -1,1153 +1,676 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ztudia · diagnóstico</title>
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Zona del Laboratorio de Computación | Menú de Grados</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            background: #0b0e14;
-            display: flex;
-            min-height: 100vh;
-            color: #eef2f6;
-        }
+    body {
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      background: #0a0f1e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      position: relative;
+      overflow-x: hidden;
+      overflow-y: auto;
+      user-select: none;
+      cursor: default;
+    }
 
-        /* ---------- SIDEBAR FIJA ---------- */
-        .sidebar {
-            width: 280px;
-            background: #12171f;
-            padding: 28px 20px;
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            overflow-y: auto;
-            box-shadow: 2px 0 16px rgba(0, 0, 0, 0.6);
-            z-index: 10;
-            border-right: 1px solid #2a2f3a;
-        }
+    .main-container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1300px;
+      background: rgba(15, 20, 35, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 2rem;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        .sidebar .logo {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            color: #f0f3fa;
-            margin-bottom: 32px;
-        }
-        .sidebar .logo span {
-            color: #d946ef;
-        }
+    .logo-container {
+      margin-bottom: 0.8rem;
+      display: flex;
+      justify-content: center;
+    }
 
-        .sidebar .seccion-titulo {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #7b8799;
-            margin-bottom: 14px;
-            font-weight: 600;
-        }
+    .logo {
+      max-width: 150px;
+      height: auto;
+      width: 100%;
+    }
 
-        .sidebar .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 10px 14px;
-            border-radius: 12px;
-            color: #b1bace;
-            font-weight: 500;
-            font-size: 15px;
-            transition: 0.2s;
-            margin-bottom: 2px;
-            cursor: default;
-        }
-        .sidebar .nav-item i {
-            width: 22px;
-            font-size: 1.1rem;
-            color: #7b8799;
-        }
-        .sidebar .nav-item.active {
-            background: #232b36;
-            color: white;
-            box-shadow: 0 2px 6px rgba(217, 70, 239, 0.08);
-        }
-        .sidebar .nav-item.active i {
-            color: #d946ef;
-        }
-        .sidebar .nav-item:not(.active):hover {
-            background: #1e2630;
-            color: #eef2f6;
-        }
+    .main-title {
+      font-size: clamp(1.8rem, 5vw, 2.4rem);
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: -0.5px;
+      color: #e0e7ff;
+      margin-bottom: 2rem;
+      line-height: 1.2;
+    }
 
-        .sidebar .spacer {
-            flex: 1;
-        }
+    .folders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      width: 100%;
+      margin-bottom: 1.5rem;
+      justify-items: center;
+    }
 
-        .sidebar .user-card {
-            background: #0e131b;
-            padding: 14px 16px;
-            border-radius: 16px;
-            margin-top: 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: 1px solid #2a2f3a;
-        }
-        .sidebar .user-card .avatar {
-            background: #d946ef;
-            width: 44px;
-            height: 44px;
-            border-radius: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 18px;
-            color: #0b0e14;
-        }
-        .sidebar .user-card .user-info .name {
-            font-weight: 600;
-            color: white;
-            font-size: 15px;
-        }
-        .sidebar .user-card .user-info .badge {
-            font-size: 12px;
-            color: #b1bace;
-            background: #1e2630;
-            padding: 2px 12px;
-            border-radius: 40px;
-            display: inline-block;
-            margin-top: 2px;
-        }
+    .folder-card {
+      background: rgba(20, 28, 45, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1.2rem;
+      padding: 1.2rem 0.8rem 1rem;
+      width: 100%;
+      max-width: 170px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
 
-        /* ---------- MAIN ---------- */
-        .main {
-            margin-left: 280px;
-            flex: 1;
-            padding: 32px 40px 60px 40px;
-            background: #0f141c;
-            min-height: 100vh;
-        }
+    .folder-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
 
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 28px;
-            flex-wrap: wrap;
-        }
-        .top-bar h1 {
-            font-weight: 600;
-            font-size: 26px;
-            color: #f0f3fa;
-            letter-spacing: -0.3px;
-        }
-        .top-bar .acciones {
-            display: flex;
-            gap: 18px;
-            color: #9aa4b6;
-        }
-        .top-bar .acciones i {
-            font-size: 1.3rem;
-            cursor: default;
-            transition: 0.2s;
-        }
-        .top-bar .acciones i:hover {
-            color: #d946ef;
-        }
+    .folder-card:active {
+      transform: translateY(-2px);
+    }
 
-        .continuar-card {
-            background: #171f2a;
-            padding: 18px 24px;
-            border-radius: 20px;
-            border: 1px solid #2a303c;
-            margin-bottom: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-        .continuar-card .left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .continuar-card .left i {
-            font-size: 1.8rem;
-            color: #d946ef;
-            background: #231b2b;
-            padding: 10px;
-            border-radius: 14px;
-        }
-        .continuar-card .left .info .titulo {
-            color: #f0f3fa;
-            font-size: 17px;
-        }
-        .continuar-card .left .info .subtitulo {
-            color: #9aa4b6;
-            font-size: 14px;
-        }
-        .continuar-card .buscador {
-            background: #1e2630;
-            padding: 8px 18px;
-            border-radius: 40px;
-            color: #b1bace;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            border: 1px solid #2f3643;
-        }
-        .continuar-card .buscador i {
-            color: #7b8799;
-        }
+    .folder-icon {
+      width: 45px;
+      height: 45px;
+      margin-bottom: 0.6rem;
+    }
 
-        .modulos-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-top: 8px;
-        }
+    .folder-label {
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.2px;
+      color: #f0f3ff;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.3rem 0.8rem;
+      border-radius: 2rem;
+      width: fit-content;
+      margin-top: 0.2rem;
+    }
 
-        .modulo-item {
-            background: #141b25;
-            border-radius: 14px;
-            padding: 14px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 1px solid #232b36;
-            transition: 0.15s;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-        }
-        .modulo-item:hover {
-            border-color: #d946ef66;
-            background: #1a212d;
-        }
+    .folder-2 { border-left: 3px solid #f59e0b; }
+    .folder-2 .folder-icon path { fill: #f59e0b; }
+    .folder-3 { border-left: 3px solid #a78bfa; }
+    .folder-3 .folder-icon path { fill: #a78bfa; }
+    .folder-4 { border-left: 3px solid #f97316; }
+    .folder-4 .folder-icon path { fill: #f97316; }
+    .folder-5 { border-left: 3px solid #06b6d4; }
+    .folder-5 .folder-icon path { fill: #06b6d4; }
+    .folder-6 { border-left: 3px solid #ef4444; }
+    .folder-6 .folder-icon path { fill: #ef4444; }
+    .folder-1b { border-left: 3px solid #10b981; }
+    .folder-1b .folder-icon path { fill: #10b981; }
+    .folder-3b { border-left: 3px solid #14b8a6; }
+    .folder-3b .folder-icon path { fill: #14b8a6; }
 
-        .modulo-item .modulo-info {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-        .modulo-item .modulo-info .numero {
-            font-weight: 600;
-            color: #7b8799;
-            font-size: 15px;
-            min-width: 32px;
-        }
-        .modulo-item .modulo-info .nombre {
-            font-weight: 500;
-            color: #eef2f6;
-            font-size: 15px;
-        }
+    .preview-panel {
+      width: 100%;
+      background: rgba(10, 15, 30, 0.9);
+      border-radius: 1.5rem;
+      padding: 1.5rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 0.5rem;
+      min-height: 150px;
+    }
 
-        .modulo-item .estado {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-        }
-        .modulo-item .estado .detalle {
-            font-size: 14px;
-            color: #b1bace;
-            background: #1e2630;
-            padding: 4px 12px;
-            border-radius: 40px;
-            font-weight: 500;
-        }
-        .modulo-item .estado .porcentaje {
-            font-weight: 700;
-            font-size: 15px;
-            min-width: 60px;
-            text-align: right;
-        }
-        .modulo-item .estado .porcentaje.completo {
-            color: #4ade80;
-        }
+    .preview-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #f0f3ff;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
 
-        .modulo-item .progress-bar {
-            width: 80px;
-            height: 6px;
-            background: #2a303c;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        .modulo-item .progress-bar .fill {
-            height: 100%;
-            background: #4ade80;
-            border-radius: 20px;
-            width: 100%;
-        }
+    .pages-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
 
-        .evaluacion-general {
-            margin-top: 24px;
-            background: #141b25;
-            border-radius: 20px;
-            padding: 18px 24px;
-            border: 1px solid #232b36;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .evaluacion-general .label {
-            font-weight: 600;
-            color: #f0f3fa;
-            font-size: 16px;
-        }
-        .evaluacion-general .promedio {
-            background: #1e2a2f;
-            color: #4ade80;
-            padding: 6px 20px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 15px;
-            border: 1px solid #2f4540;
-        }
+    .page-preview {
+      background: rgba(20, 25, 45, 0.8);
+      border-radius: 1rem;
+      overflow: hidden;
+      width: 150px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.2s ease;
+      text-decoration: none;
+      color: white;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .footer-info {
-            margin-top: 12px;
-            color: #5e6a7a;
-            font-size: 13px;
-            border-top: 1px solid #1e2630;
-            padding-top: 16px;
-            display: flex;
-            gap: 24px;
-        }
-        .footer-info i {
-            color: #4ade80;
-        }
+    .page-preview:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,0.2);
+    }
 
-        .btn-evaluar {
-            background: #d946ef22;
-            border: 1px solid #d946ef44;
-            color: #d946ef;
-            padding: 4px 14px;
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: default;
-        }
-        .btn-evaluar i {
-            margin-right: 6px;
-        }
+    .preview-img {
+      width: 100%;
+      height: 85px;
+      object-fit: cover;
+      display: block;
+      background: #1a2040;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
 
-        /* ========== GALERÍA OVERLAY (pantalla completa) ========== */
-        .galeria-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.92);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 20px;
-            animation: fadeIn 0.3s ease;
-        }
-        .galeria-overlay.abierto {
-            display: flex;
-        }
+    .preview-info {
+      padding: 0.6rem 0.4rem;
+      font-weight: 500;
+      font-size: 0.8rem;
+      text-align: center;
+      background: rgba(5, 8, 18, 0.9);
+      color: #b4c0e0;
+    }
 
-        .galeria-overlay .cerrar-galeria-overlay {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            background: none;
-            border: none;
-            color: #f0f3fa;
-            font-size: 36px;
-            cursor: pointer;
-            transition: 0.2s;
-            z-index: 10;
-        }
-        .galeria-overlay .cerrar-galeria-overlay:hover {
-            color: #d946ef;
-            transform: scale(1.1);
-        }
+    .download-button {
+      background: rgba(20, 180, 160, 0.15);
+      border: 1px solid rgba(20, 180, 160, 0.3);
+      color: #5eead4;
+      font-weight: 600;
+      padding: 0.3rem 0.6rem;
+      border-radius: 0.6rem;
+      margin: 0.2rem 0.4rem 0.4rem;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.7rem;
+      text-align: center;
+    }
 
-        .galeria-overlay .carousel-container {
-            width: 95%;
-            max-width: 1200px;
-            max-height: 90vh;
-        }
+    .download-button:hover {
+      background: rgba(20, 180, 160, 0.25);
+    }
 
-        .galeria-overlay .carousel-item img {
-            width: 100%;
-            height: 80vh;
-            object-fit: contain;
-            background: #0b0e14;
-            border-radius: 8px;
-            cursor: zoom-in;
-            transition: transform 0.3s ease;
-        }
+    .back-button {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #f0f3ff;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+      border-radius: 2rem;
+      margin-top: 1.2rem;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+    }
 
-        .galeria-overlay .carousel-item img.zoom-activo {
-            transform: scale(1.8);
-            cursor: zoom-out;
-        }
+    .back-button:hover {
+      background: rgba(255,255,255,0.1);
+    }
 
-        .galeria-overlay .carousel-control-prev-icon,
-        .galeria-overlay .carousel-control-next-icon {
-            background-color: rgba(217, 70, 239, 0.4);
-            border-radius: 50%;
-            padding: 25px;
-            background-size: 50%;
-        }
+    .subfolder-card {
+      background: rgba(20, 25, 45, 0.8);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      overflow: hidden;
+      width: 150px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+      transition: transform 0.2s ease;
+      text-decoration: none;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
 
-        .galeria-overlay .carousel-control-prev,
-        .galeria-overlay .carousel-control-next {
-            width: 8%;
-            opacity: 0.7;
-        }
-        .galeria-overlay .carousel-control-prev:hover,
-        .galeria-overlay .carousel-control-next:hover {
-            opacity: 1;
-        }
+    .subfolder-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,0.2);
+    }
 
-        .galeria-overlay .carousel-indicators [data-bs-target] {
-            background-color: #d946ef;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            border: none;
-            margin: 0 6px;
-            opacity: 0.5;
-        }
-        .galeria-overlay .carousel-indicators .active {
-            opacity: 1;
-        }
+    .hidden {
+      display: none;
+    }
 
-        .galeria-overlay .carousel-indicators {
-            bottom: -40px;
-        }
+    /* Botón invisible en esquina inferior izquierda */
+    .invisible-link {
+      position: fixed;
+      bottom: 15px;
+      left: 15px;
+      width: 35px;
+      height: 35px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 9999;
+      opacity: 0.01;
+      transition: opacity 0.3s ease;
+      border-radius: 50%;
+    }
 
-        .zoom-info {
-            color: #9aa4b6;
-            font-size: 14px;
-            margin-top: 50px;
-            text-align: center;
-            letter-spacing: 0.5px;
-        }
-        .zoom-info i {
-            color: #d946ef;
-            margin-right: 8px;
-        }
+    .invisible-link:hover {
+      opacity: 0.05;
+    }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        /* responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 220px;
-                padding: 20px 14px;
-            }
-            .main {
-                margin-left: 220px;
-                padding: 24px 16px;
-            }
-            .galeria-overlay .carousel-item img {
-                height: 60vh;
-            }
-        }
-        @media (max-width: 550px) {
-            .sidebar {
-                display: none;
-            }
-            .main {
-                margin-left: 0;
-            }
-            .galeria-overlay .carousel-item img {
-                height: 50vh;
-            }
-        }
-    </style>
+    @media (max-width: 600px) {
+      .main-container {
+        padding: 1.5rem 0.8rem;
+        border-radius: 1.5rem;
+      }
+      .folders-grid {
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+        gap: 0.7rem;
+      }
+      .folder-card {
+        max-width: 140px;
+        padding: 1rem 0.6rem;
+      }
+      .page-preview, .subfolder-card {
+        width: 130px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="logo">ztu<span>dia</span></div>
-        <div class="seccion-titulo">Secciones</div>
-        <div class="nav-item active"><i class="fas fa-th-large"></i> Dashboard</div>
-        <div class="nav-item"><i class="fas fa-book-open"></i> Mis cursos</div>
-        <div class="nav-item"><i class="fas fa-chart-line"></i> Progreso</div>
-        <div class="nav-item"><i class="fas fa-calendar-alt"></i> Calendario</div>
-        <div class="nav-item"><i class="fas fa-cog"></i> Ajustes</div>
-        <div class="spacer"></div>
-        <div class="user-card">
-            <div class="avatar">A</div>
-            <div class="user-info">
-                <div class="name">Anónimo</div>
-                <div class="badge">Ztuciante</div>
-            </div>
-        </div>
-    </aside>
-
-    <!-- MAIN -->
-    <main class="main">
-        <div class="top-bar">
-            <h1>Evaluación diagnóstica</h1>
-            <div class="acciones">
-                <i class="far fa-bell"></i>
-                <i class="far fa-user-circle"></i>
-            </div>
-        </div>
-
-        <div class="continuar-card">
-            <div class="left">
-                <i class="fas fa-play-circle"></i>
-                <div class="info">
-                    <div class="titulo">Continuar donde me quedé</div>
-                    <div class="subtitulo">1.1 - Conocer la historia de la ...</div>
-                </div>
-            </div>
-            <div class="buscador">
-                <i class="fas fa-search"></i> Buscar tema...
-            </div>
-        </div>
-
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
-            <span style="font-weight: 600; color: #f0f3fa; font-size: 18px;">Temario</span>
-            <span style="background: #1e2630; padding: 2px 14px; border-radius: 40px; font-size: 13px; color: #b1bace;">14 módulos</span>
-        </div>
-
-        <!-- LISTA DE MÓDULOS -->
-        <div class="modulos-grid">
-            <div class="modulo-item"><div class="modulo-info"><span class="numero">1</span><span class="nombre">Introducción a la Programación Orientada a Objetos</span></div><div class="estado"><span class="detalle">Aprobado: 8 de 10</span><div class="progress-bar"><div class="fill"></div></div><span class="porcentaje completo">100%</span></div></div>
-            <div class="modulo-item"><div class="modulo-info"><span class="numero">2</span><span class="nombre">El principio de Abstracción</span></div><div class="estado"><span class="detalle">Aprobado: 6 de 10</span><div class="progress-bar"><div class="fill"></div></div><span class="porcentaje completo">100%</span></div></div>
-            <div class="modulo-item"><div class="modulo-info"><span class="numero">3</span><span class="nombre">Lenguaje de Modelado Unificado</span></div><div class="estado"><span class="detalle">Aprobado: 8 de 10</span><div class="progress-bar"><div class="fill"></div></div><span class="porcentaje completo">100%</span></div></div>
-            <div class="modulo-item"><div class="modulo-info"><span class="numero">4</span><span class="nombre">Creación de clases y objetos</span></div><div class="estado"><span class="detalle">Aprobado: 7 de 10</span><div class="progress-bar"><div class="fill"></div></div><span class="porcentaje completo">100%</span></div></div>
-            <div class="modulo-item"><div class="modulo-info"><span class="numero">5</span><span class="nombre">Uso de clases y objetos</span></div><div class="estado"><span class="detalle">Aprobado: 8 de 10</span><div class="progress-bar"><div class="fill"></div></div><span class="porcentaje completo">100%</span></div></div>
-            <!-- MÓDULO 6: abre galería con imágenes de Encapsulamiento -->
-            <div class="modulo-item" id="modulo6">
-                <div class="modulo-info">
-                    <span class="numero">6</span>
-                    <span class="nombre">El principio de Encapsulamiento</span>
-                </div>
-                <div class="estado">
-                    <span class="detalle">Aprobado: 7 de 10</span>
-                    <div class="progress-bar"><div class="fill"></div></div>
-                    <span class="porcentaje completo">100%</span>
-                    <span class="btn-evaluar"><i class="fas fa-images"></i> Galería</span>
-                </div>
-            </div>
-            <!-- MÓDULO 7: abre galería con imágenes de Herencia -->
-            <div class="modulo-item" id="modulo7">
-                <div class="modulo-info">
-                    <span class="numero">7</span>
-                    <span class="nombre">El principio de Herencia</span>
-                </div>
-                <div class="estado">
-                    <span class="detalle">Aprobado: 6 de 7</span>
-                    <div class="progress-bar"><div class="fill"></div></div>
-                    <span class="porcentaje completo">100%</span>
-                    <span class="btn-evaluar"><i class="fas fa-images"></i> Galería</span>
-                </div>
-            </div>
-            <!-- MÓDULO 8: abre galería con imágenes de Polimorfismo -->
-            <div class="modulo-item" id="modulo8">
-                <div class="modulo-info">
-                    <span class="numero">8</span>
-                    <span class="nombre">El principio de Polimorfismo</span>
-                </div>
-                <div class="estado">
-                    <span class="detalle">Aprobado: 7 de 7</span>
-                    <div class="progress-bar"><div class="fill"></div></div>
-                    <span class="porcentaje completo">100%</span>
-                    <span class="btn-evaluar"><i class="fas fa-images"></i> Galería</span>
-                </div>
-            </div>
-            <!-- MÓDULO 9: abre galería con imágenes de Manejo de excepciones -->
-            <div class="modulo-item" id="modulo9">
-                <div class="modulo-info">
-                    <span class="numero">9</span>
-                    <span class="nombre">Manejo de excepciones</span>
-                </div>
-                <div class="estado">
-                    <span class="detalle">Aprobado: 7 de 7</span>
-                    <div class="progress-bar"><div class="fill"></div></div>
-                    <span class="porcentaje completo">100%</span>
-                    <span class="btn-evaluar"><i class="fas fa-images"></i> Galería</span>
-                </div>
-            </div>
-            <!-- MÓDULO 10: abre galería con imágenes de Clases y objetos avanzados -->
-            <div class="modulo-item" id="modulo10">
-                <div class="modulo-info">
-                    <span class="numero">10</span>
-                    <span class="nombre">Creación de clases y objetos avanzados</span>
-                </div>
-                <div class="estado">
-                    <span class="detalle">Aprobado: 7 de 9</span>
-                    <div class="progress-bar"><div class="fill"></div></div>
-                    <span class="porcentaje completo">100%</span>
-                    <span class="btn-evaluar"><i class="fas fa-images"></i> Galería</span>
-                </div>
-            </div>
-            <!-- MÓDULO 11: abre galería con imágenes de Colecciones y bibliotecas -->
-            <div class="modulo-item" id="modulo11">
-                <div class="modulo-info">
-                    <span class="numero">11</span>
-                    <span class="nombre">Manejo de colecciones y bibliotecas</span>
-                </div>
-                <div class="estado">
-                    <span class="detalle">Aprobado: 0 de 6</span>
-                    <div class="progress-bar"><div class="fill"></div></div>
-                    <span class="porcentaje completo">100%</span>
-                    <span class="btn-evaluar"><i class="fas fa-images"></i> Galería</span>
-                </div>
-            </div>
-            <!-- MÓDULO 12: abre galería con imágenes de Patrones de diseño -->
-            <div class="modulo-item" id="modulo12">
-                <div class="modulo-info">
-                    <span class="numero">12</span>
-                    <span class="nombre">Introducción a los patrones de diseño</span>
-                </div>
-                <div class="estado">
-                    <span class="detalle">Aprobado: 1 de 7</span>
-                    <div class="progress-bar"><div class="fill"></div></div>
-                    <span class="porcentaje completo">100%</span>
-                    <span class="btn-evaluar"><i class="fas fa-images"></i> Galería</span>
-                </div>
-            </div>
-            <!-- MÓDULO 13: abre galería con imágenes SOLID -->
-            <div class="modulo-item" id="modulo13">
-                <div class="modulo-info">
-                    <span class="numero">13</span>
-                    <span class="nombre">Principios SOLID</span>
-                </div>
-                <div class="estado">
-                    <span class="detalle">Aprobado: 0 de 5</span>
-                    <div class="progress-bar"><div class="fill"></div></div>
-                    <span class="porcentaje completo">100%</span>
-                    <span class="btn-evaluar"><i class="fas fa-images"></i> Galería</span>
-                </div>
-            </div>
-            <!-- MÓDULO 14: abre galería con imágenes de Buenas prácticas -->
-            <div class="modulo-item" id="modulo14">
-                <div class="modulo-info">
-                    <span class="numero">14</span>
-                    <span class="nombre">Buenas prácticas</span>
-                </div>
-                <div class="estado">
-                    <span class="detalle">Aprobado: 0 de 7</span>
-                    <div class="progress-bar"><div class="fill"></div></div>
-                    <span class="porcentaje completo">100%</span>
-                    <span class="btn-evaluar"><i class="fas fa-images"></i> Galería</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="evaluacion-general">
-            <span class="label">Evaluación general</span>
-            <span class="promedio">100% · 14/14</span>
-        </div>
-        <div class="footer-info">
-            <span><i class="far fa-check-circle"></i> 14 módulos completados</span>
-            <span><i class="far fa-clock"></i> Última actividad: hoy</span>
-        </div>
-    </main>
-
-    <!-- ========== GALERÍA OVERLAY 1 (Módulo 6 - Encapsulamiento) ========== -->
-    <div class="galeria-overlay" id="galeriaOverlay6">
-        <button class="cerrar-galeria-overlay" id="cerrarOverlay6"><i class="fas fa-times"></i></button>
-        <div class="carousel-container">
-            <div id="carouselGaleria6" class="carousel slide" data-bs-ride="false">
-                <div class="carousel-indicators" id="indicadores6"></div>
-                <div class="carousel-inner" id="carouselInner6"></div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselGaleria6" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselGaleria6" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Siguiente</span>
-                </button>
-            </div>
-        </div>
-        <div class="zoom-info">
-            <i class="fas fa-mouse-pointer"></i> Haz clic en la imagen para hacer zoom
-        </div>
+  <div class="main-container">
+    <div class="logo-container">
+      <img src="https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" 
+           alt="Logo Laboratorio" 
+           class="logo"
+           onerror="this.style.display='none';">
     </div>
 
-    <!-- ========== GALERÍA OVERLAY 2 (Módulo 7 - Herencia) ========== -->
-    <div class="galeria-overlay" id="galeriaOverlay7">
-        <button class="cerrar-galeria-overlay" id="cerrarOverlay7"><i class="fas fa-times"></i></button>
-        <div class="carousel-container">
-            <div id="carouselGaleria7" class="carousel slide" data-bs-ride="false">
-                <div class="carousel-indicators" id="indicadores7"></div>
-                <div class="carousel-inner" id="carouselInner7"></div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselGaleria7" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselGaleria7" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Siguiente</span>
-                </button>
-            </div>
-        </div>
-        <div class="zoom-info">
-            <i class="fas fa-mouse-pointer"></i> Haz clic en la imagen para hacer zoom
-        </div>
+    <h1 class="main-title">Zona Del Laboratorio de Computación</h1>
+
+    <div id="foldersView" class="folders-grid">
+      <div class="folder-card folder-2" onclick="openGrade('2do Primaria', 'segundo')">
+        <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+          <path d="M2 6C2 4.9 2.9 4 4 4H9L11 6H20C21.1 6 22 6.9 22 8V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6Z" fill="#f59e0b" stroke="white"/>
+        </svg>
+        <span class="folder-label">2do. Primaria</span>
+      </div>
+      <div class="folder-card folder-3" onclick="openGrade('3ro Primaria', 'tercero')">
+        <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+          <path d="M2 6C2 4.9 2.9 4 4 4H9L11 6H20C21.1 6 22 6.9 22 8V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6Z" fill="#a78bfa" stroke="white"/>
+        </svg>
+        <span class="folder-label">3ro. Primaria</span>
+      </div>
+      <div class="folder-card folder-4" onclick="openGrade('4to Primaria', 'cuarto')">
+        <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+          <path d="M2 6C2 4.9 2.9 4 4 4H9L11 6H20C21.1 6 22 6.9 22 8V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6Z" fill="#f97316" stroke="white"/>
+        </svg>
+        <span class="folder-label">4to. Primaria</span>
+      </div>
+      <div class="folder-card folder-5" onclick="openGrade('5to Primaria', 'quinto')">
+        <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+          <path d="M2 6C2 4.9 2.9 4 4 4H9L11 6H20C21.1 6 22 6.9 22 8V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6Z" fill="#06b6d4" stroke="white"/>
+        </svg>
+        <span class="folder-label">5to. Primaria</span>
+      </div>
+      <div class="folder-card folder-6" onclick="openGrade('6to Primaria', 'sexto')">
+        <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+          <path d="M2 6C2 4.9 2.9 4 4 4H9L11 6H20C21.1 6 22 6.9 22 8V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6Z" fill="#ef4444" stroke="white"/>
+        </svg>
+        <span class="folder-label">6to. Primaria</span>
+      </div>
+      <div class="folder-card folder-1b" onclick="openGrade('1ro. Básico', 'primeroBasico')">
+        <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+          <path d="M2 6C2 4.9 2.9 4 4 4H9L11 6H20C21.1 6 22 6.9 22 8V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6Z" fill="#10b981" stroke="white"/>
+        </svg>
+        <span class="folder-label">1ro. Básico</span>
+      </div>
+      <div class="folder-card folder-3b" onclick="openGrade('3ro. Básico', 'terceroBasico')">
+        <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+          <path d="M2 6C2 4.9 2.9 4 4 4H9L11 6H20C21.1 6 22 6.9 22 8V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6Z" fill="#14b8a6" stroke="white"/>
+        </svg>
+        <span class="folder-label">3ro. Básico</span>
+      </div>
     </div>
 
-    <!-- ========== GALERÍA OVERLAY 3 (Módulo 8 - Polimorfismo) ========== -->
-    <div class="galeria-overlay" id="galeriaOverlay8">
-        <button class="cerrar-galeria-overlay" id="cerrarOverlay8"><i class="fas fa-times"></i></button>
-        <div class="carousel-container">
-            <div id="carouselGaleria8" class="carousel slide" data-bs-ride="false">
-                <div class="carousel-indicators" id="indicadores8"></div>
-                <div class="carousel-inner" id="carouselInner8"></div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselGaleria8" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselGaleria8" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Siguiente</span>
-                </button>
-            </div>
-        </div>
-        <div class="zoom-info">
-            <i class="fas fa-mouse-pointer"></i> Haz clic en la imagen para hacer zoom
-        </div>
+    <div id="previewPanel" class="preview-panel hidden">
+      <div class="preview-title" id="gradeTitle">📂 Grado</div>
+      <div id="pagesContainer" class="pages-grid"></div>
+      <button class="back-button" onclick="backToFolders()">← Volver a carpetas</button>
     </div>
+  </div>
 
-    <!-- ========== GALERÍA OVERLAY 4 (Módulo 9 - Manejo de excepciones) ========== -->
-    <div class="galeria-overlay" id="galeriaOverlay9">
-        <button class="cerrar-galeria-overlay" id="cerrarOverlay9"><i class="fas fa-times"></i></button>
-        <div class="carousel-container">
-            <div id="carouselGaleria9" class="carousel slide" data-bs-ride="false">
-                <div class="carousel-indicators" id="indicadores9"></div>
-                <div class="carousel-inner" id="carouselInner9"></div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselGaleria9" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselGaleria9" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Siguiente</span>
-                </button>
-            </div>
-        </div>
-        <div class="zoom-info">
-            <i class="fas fa-mouse-pointer"></i> Haz clic en la imagen para hacer zoom
-        </div>
-    </div>
+  <!-- Botón invisible en esquina inferior izquierda -->
+  <button class="invisible-link" onclick="window.open('https://jp-zeu-2007.github.io/5to-bach-TUDIA/', '_blank')" title=""></button>
 
-    <!-- ========== GALERÍA OVERLAY 5 (Módulo 10 - Clases y objetos avanzados) ========== -->
-    <div class="galeria-overlay" id="galeriaOverlay10">
-        <button class="cerrar-galeria-overlay" id="cerrarOverlay10"><i class="fas fa-times"></i></button>
-        <div class="carousel-container">
-            <div id="carouselGaleria10" class="carousel slide" data-bs-ride="false">
-                <div class="carousel-indicators" id="indicadores10"></div>
-                <div class="carousel-inner" id="carouselInner10"></div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselGaleria10" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselGaleria10" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Siguiente</span>
-                </button>
-            </div>
-        </div>
-        <div class="zoom-info">
-            <i class="fas fa-mouse-pointer"></i> Haz clic en la imagen para hacer zoom
-        </div>
-    </div>
-
-    <!-- ========== GALERÍA OVERLAY 6 (Módulo 11 - Colecciones y bibliotecas) ========== -->
-    <div class="galeria-overlay" id="galeriaOverlay11">
-        <button class="cerrar-galeria-overlay" id="cerrarOverlay11"><i class="fas fa-times"></i></button>
-        <div class="carousel-container">
-            <div id="carouselGaleria11" class="carousel slide" data-bs-ride="false">
-                <div class="carousel-indicators" id="indicadores11"></div>
-                <div class="carousel-inner" id="carouselInner11"></div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselGaleria11" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselGaleria11" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Siguiente</span>
-                </button>
-            </div>
-        </div>
-        <div class="zoom-info">
-            <i class="fas fa-mouse-pointer"></i> Haz clic en la imagen para hacer zoom
-        </div>
-    </div>
-
-    <!-- ========== GALERÍA OVERLAY 7 (Módulo 12 - Patrones de diseño) ========== -->
-    <div class="galeria-overlay" id="galeriaOverlay12">
-        <button class="cerrar-galeria-overlay" id="cerrarOverlay12"><i class="fas fa-times"></i></button>
-        <div class="carousel-container">
-            <div id="carouselGaleria12" class="carousel slide" data-bs-ride="false">
-                <div class="carousel-indicators" id="indicadores12"></div>
-                <div class="carousel-inner" id="carouselInner12"></div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselGaleria12" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselGaleria12" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Siguiente</span>
-                </button>
-            </div>
-        </div>
-        <div class="zoom-info">
-            <i class="fas fa-mouse-pointer"></i> Haz clic en la imagen para hacer zoom
-        </div>
-    </div>
-
-    <!-- ========== GALERÍA OVERLAY 8 (Módulo 13 - SOLID) ========== -->
-    <div class="galeria-overlay" id="galeriaOverlay13">
-        <button class="cerrar-galeria-overlay" id="cerrarOverlay13"><i class="fas fa-times"></i></button>
-        <div class="carousel-container">
-            <div id="carouselGaleria13" class="carousel slide" data-bs-ride="false">
-                <div class="carousel-indicators" id="indicadores13"></div>
-                <div class="carousel-inner" id="carouselInner13"></div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselGaleria13" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselGaleria13" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Siguiente</span>
-                </button>
-            </div>
-        </div>
-        <div class="zoom-info">
-            <i class="fas fa-mouse-pointer"></i> Haz clic en la imagen para hacer zoom
-        </div>
-    </div>
-
-    <!-- ========== GALERÍA OVERLAY 9 (Módulo 14 - Buenas prácticas) ========== -->
-    <div class="galeria-overlay" id="galeriaOverlay14">
-        <button class="cerrar-galeria-overlay" id="cerrarOverlay14"><i class="fas fa-times"></i></button>
-        <div class="carousel-container">
-            <div id="carouselGaleria14" class="carousel slide" data-bs-ride="false">
-                <div class="carousel-indicators" id="indicadores14"></div>
-                <div class="carousel-inner" id="carouselInner14"></div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselGaleria14" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselGaleria14" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Siguiente</span>
-                </button>
-            </div>
-        </div>
-        <div class="zoom-info">
-            <i class="fas fa-mouse-pointer"></i> Haz clic en la imagen para hacer zoom
-        </div>
-    </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-
-    <script>
-        (function() {
-            // ========== CONFIGURACIÓN DE GALERÍAS ==========
-            const galerias = [
-                {
-                    id: 6,
-                    nombre: 'Encapsulamiento',
-                    imagenes: [
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1789006783/7_e6sc2f.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1789006783/5_buxc14.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1789006783/6_ahhvn2.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1789006781/1_bgwz7a.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1789006782/4_rxytqy.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1789006782/3_idpuqq.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1789006782/2_u7ab2s.jpg"
-                    ],
-                    overlayId: 'galeriaOverlay6',
-                    cerrarId: 'cerrarOverlay6',
-                    carouselId: 'carouselGaleria6',
-                    innerId: 'carouselInner6',
-                    indicadoresId: 'indicadores6',
-                    moduloId: 'modulo6'
-                },
-                {
-                    id: 7,
-                    nombre: 'Herencia',
-                    imagenes: [
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1789006563/6_kctdq4.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1789006563/3_u2nibd.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1789006562/1_cvvjgt.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1789006562/5_iypm0i.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1789006562/2_wskwwc.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1789006562/4_quxno5.jpg"
-                    ],
-                    overlayId: 'galeriaOverlay7',
-                    cerrarId: 'cerrarOverlay7',
-                    carouselId: 'carouselGaleria7',
-                    innerId: 'carouselInner7',
-                    indicadoresId: 'indicadores7',
-                    moduloId: 'modulo7'
-                },
-                {
-                    id: 8,
-                    nombre: 'Polimorfismo',
-                    imagenes: [
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788665415/7_vw2j7c.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788665406/2_jvujvd.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788665404/6_bioy6g.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788665404/5_rtuwir.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788665404/4_bpbxah.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788665404/1_avqvkj.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788665403/3_zqtr1j.jpg"
-                    ],
-                    overlayId: 'galeriaOverlay8',
-                    cerrarId: 'cerrarOverlay8',
-                    carouselId: 'carouselGaleria8',
-                    innerId: 'carouselInner8',
-                    indicadoresId: 'indicadores8',
-                    moduloId: 'modulo8'
-                },
-                {
-                    id: 9,
-                    nombre: 'Manejo de excepciones',
-                    imagenes: [
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204599/6_koyclo.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204599/5_rioasz.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204598/4_qpsgtb.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204598/3_ofhii4.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204598/2_a4d2yb.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204597/1_wxlrkg.jpg"
-                    ],
-                    overlayId: 'galeriaOverlay9',
-                    cerrarId: 'cerrarOverlay9',
-                    carouselId: 'carouselGaleria9',
-                    innerId: 'carouselInner9',
-                    indicadoresId: 'indicadores9',
-                    moduloId: 'modulo9'
-                },
-                {
-                    id: 10,
-                    nombre: 'Clases y objetos avanzados',
-                    imagenes: [
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204261/10_nmdose.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204260/9_tshk4c.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204260/9_tshk4c.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204259/7_c7km4p.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204259/6_khdvwu.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204259/5_dz4h3b.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204259/4_ckuxzq.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204258/3_imlkyh.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204258/1_ryhly5.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788204258/2_mr73ag.jpg"
-                    ],
-                    overlayId: 'galeriaOverlay10',
-                    cerrarId: 'cerrarOverlay10',
-                    carouselId: 'carouselGaleria10',
-                    innerId: 'carouselInner10',
-                    indicadoresId: 'indicadores10',
-                    moduloId: 'modulo10'
-                },
-                {
-                    id: 11,
-                    nombre: 'Colecciones y bibliotecas',
-                    imagenes: [
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788190373/4_fubb8a.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788190373/5_b1igzc.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788190373/6_teobvi.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788190373/3_k2hqtp.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788190373/2_ndhfas.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788190372/1_wzakod.jpg"
-                    ],
-                    overlayId: 'galeriaOverlay11',
-                    cerrarId: 'cerrarOverlay11',
-                    carouselId: 'carouselGaleria11',
-                    innerId: 'carouselInner11',
-                    indicadoresId: 'indicadores11',
-                    moduloId: 'modulo11'
-                },
-                {
-                    id: 12,
-                    nombre: 'Patrones de diseño',
-                    imagenes: [
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788189218/7_kbev3s.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788189217/6_xzml6e.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788189217/2_ldts1y.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788189217/5_aiiirn.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788189217/4_guqrcc.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788189217/1_hjonay.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1788189217/3_oifbsa.jpg"
-                    ],
-                    overlayId: 'galeriaOverlay12',
-                    cerrarId: 'cerrarOverlay12',
-                    carouselId: 'carouselGaleria12',
-                    innerId: 'carouselInner12',
-                    indicadoresId: 'indicadores12',
-                    moduloId: 'modulo12'
-                },
-                {
-                    id: 13,
-                    nombre: 'SOLID',
-                    imagenes: [
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787111301/5_y8gvux.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787111301/4_x05pr9.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787111300/1_s1sxqo.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787111300/2_indppj.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787111300/3_bv1fqx.jpg"
-                    ],
-                    overlayId: 'galeriaOverlay13',
-                    cerrarId: 'cerrarOverlay13',
-                    carouselId: 'carouselGaleria13',
-                    innerId: 'carouselInner13',
-                    indicadoresId: 'indicadores13',
-                    moduloId: 'modulo13'
-                },
-                {
-                    id: 14,
-                    nombre: 'Buenas prácticas',
-                    imagenes: [
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787109717/10_grffyb.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787109716/9_mz0qrh.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787109716/4_vlyd0x.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787109716/5_yvxsho.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787109715/3_tdvnd3.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787109715/8_otspwa.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787109715/2_eebnmv.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787109714/1_thcqmt.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787109714/7_mjpvti.jpg",
-                        "https://res.cloudinary.com/dmis07evg/image/upload/v1787109714/6_wrqbjt.jpg"
-                    ],
-                    overlayId: 'galeriaOverlay14',
-                    cerrarId: 'cerrarOverlay14',
-                    carouselId: 'carouselGaleria14',
-                    innerId: 'carouselInner14',
-                    indicadoresId: 'indicadores14',
-                    moduloId: 'modulo14'
-                }
-            ];
-
-            // Función para construir un carrusel dentro de un overlay
-            function buildGaleria(config) {
-                const overlay = document.getElementById(config.overlayId);
-                const cerrarBtn = document.getElementById(config.cerrarId);
-                const modulo = document.getElementById(config.moduloId);
-                const inner = document.getElementById(config.innerId);
-                const indicadores = document.getElementById(config.indicadoresId);
-
-                let carouselInstance = null;
-
-                // Construir el carrusel
-                function buildCarousel() {
-                    inner.innerHTML = '';
-                    indicadores.innerHTML = '';
-
-                    config.imagenes.forEach((url, idx) => {
-                        // Indicador
-                        const btn = document.createElement('button');
-                        btn.type = 'button';
-                        btn.setAttribute('data-bs-target', '#' + config.carouselId);
-                        btn.setAttribute('data-bs-slide-to', idx);
-                        if (idx === 0) {
-                            btn.className = 'active';
-                            btn.setAttribute('aria-current', 'true');
-                        }
-                        btn.setAttribute('aria-label', `Slide ${idx + 1}`);
-                        indicadores.appendChild(btn);
-
-                        // Item
-                        const div = document.createElement('div');
-                        div.className = `carousel-item ${idx === 0 ? 'active' : ''}`;
-                        const img = document.createElement('img');
-                        img.src = url;
-                        img.className = 'd-block w-100';
-                        img.alt = `Imagen ${idx + 1} - ${config.nombre}`;
-                        img.loading = 'lazy';
-                        // Click para zoom en la imagen
-                        img.addEventListener('click', function(e) {
-                            e.stopPropagation();
-                            this.classList.toggle('zoom-activo');
-                            this.style.cursor = this.classList.contains('zoom-activo') ? 'zoom-out' : 'zoom-in';
-                        });
-                        div.appendChild(img);
-                        inner.appendChild(div);
-                    });
-                }
-
-                // Abrir galería
-                function abrirGaleria() {
-                    overlay.classList.add('abierto');
-                    document.body.style.overflow = 'hidden';
-
-                    if (carouselInstance) {
-                        carouselInstance.dispose();
-                    }
-                    carouselInstance = new bootstrap.Carousel(document.getElementById(config.carouselId), {
-                        interval: false,
-                        wrap: true,
-                        keyboard: true
-                    });
-
-                    // Resetear zooms
-                    document.querySelectorAll(`#${config.innerId} img`).forEach(img => {
-                        img.classList.remove('zoom-activo');
-                        img.style.cursor = 'zoom-in';
-                    });
-                }
-
-                function cerrarGaleria() {
-                    overlay.classList.remove('abierto');
-                    document.body.style.overflow = '';
-                    if (carouselInstance) {
-                        carouselInstance.dispose();
-                        carouselInstance = null;
-                    }
-                }
-
-                // Eventos
-                modulo.addEventListener('click', abrirGaleria);
-                cerrarBtn.addEventListener('click', cerrarGaleria);
-
-                // Cerrar con Escape
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && overlay.classList.contains('abierto')) {
-                        cerrarGaleria();
-                    }
-                });
-
-                // Cerrar al hacer clic en el fondo
-                overlay.addEventListener('click', function(e) {
-                    if (e.target === overlay) {
-                        cerrarGaleria();
-                    }
-                });
-
-                // Inicializar
-                buildCarousel();
+  <script>
+    (function() {
+      // ----- PÁGINAS (5to Primaria actualizado con nueva página) -----
+      const pagesData = {
+        segundo: {
+          pages: [
+            { name: "Página 2do (1)", url: "https://jp-zeu-2007.github.io/PAGINA035/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 2do (2)", url: "https://jp-zeu-2007.github.io/PAGINA037/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 2do (3)", url: "https://jp-zeu-2007.github.io/PAGINA038/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 2do (4)", url: "https://jp-zeu-2007.github.io/PAGINA041/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 2do (5)", url: "https://jp-zeu-2007.github.io/PAGINA047/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Fox Adventurer", url: "https://www.cokitos.com/fox-adventurer/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true }
+          ],
+          subfolders: [
+            {
+              name: "Repaso",
+              type: "folder",
+              pages: [
+                { name: "SERIE 1", url: "https://jp-zeu-2007.github.io/PAGINA045/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+                { name: "SERIE 2", url: "https://jp-zeu-2007.github.io/PAGINA046/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
+              ]
             }
+          ]
+        },
+        tercero: {
+          pages: [
+            { name: "Página 3ro (1)", url: "https://jp-zeu-2007.github.io/PAGINA27/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 3ro (2)", url: "https://jp-zeu-2007.github.io/PAGINA028/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 3ro (3)", url: "https://jp-zeu-2007.github.io/PAGINA030/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 3ro (4)", url: "https://jp-zeu-2007.github.io/PAGINA032/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 3ro (5)", url: "https://jp-zeu-2007.github.io/PAGINA036/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Despertar al Robot", url: "https://www.cokitos.com/despertar-al-robot-robot-awake/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
+            { name: "Programar al Panda", url: "https://www.cokitos.com/programar-al-panda/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
+            { name: "Seasonland", url: "https://www.cokitos.com/seasonland/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
+            { name: "Ratatype", url: "https://www.ratatype.com/login/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isTyping: true }
+          ],
+          subfolders: [
+            {
+              name: "Repaso",
+              type: "folder",
+              pages: [
+                { name: "SERIE 1", url: "https://jp-zeu-2007.github.io/PAGINA042/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+                { name: "SERIE 2", url: "https://jp-zeu-2007.github.io/PAGINA043/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+                { name: "SERIE 3", url: "https://jp-zeu-2007.github.io/PAGINA044/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
+              ]
+            }
+          ]
+        },
+        cuarto: [
+          { name: "Página 4to (1)", url: "https://jp-zeu-2007.github.io/PAGINA025/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+          { name: "Página 4to (2)", url: "https://jp-zeu-2007.github.io/PAGINA029/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+          { name: "Página 4to (3)", url: "https://drive.google.com/file/d/1hQjnuExE0VexZN1nDpg4hvR2mIRHQVlZ/view?usp=sharing", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+          { name: "Seasonland", url: "https://www.cokitos.com/seasonland/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
+          { name: "POWER POINT PRESENTACION", url: "https://res.cloudinary.com/dmis07evg/raw/upload/v1788752617/Descubriendo-PowerPoint_tickpb.ppsx", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isPpt: true }
+        ],
+        quinto: {
+          pages: [
+            { name: "VR VEX 5to", url: "https://vr.vex.com/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 5to (2)", url: "https://jp-zeu-2007.github.io/PAGINA034/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 5to (3)", url: "https://jp-zeu-2007.github.io/PAGINA039/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 5to (4)", url: "https://jp-zeu-2007.github.io/PAGINA049/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "El Tesoro del Capitán Cookies 1", url: "https://jp-zeu-2007.github.io/EL-TESORO-DEL-CAPITAN-COOKIES/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "El Tesoro del Capitán Cookies 2", url: "https://jp-zeu-2007.github.io/EL-TESORO-DEL-CAPITAN-COOKIES2/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "DOCUMENTO VIDEOJUEGO", url: "https://res.cloudinary.com/dmis07evg/raw/upload/v1783309248/Guia_Godot4_VideoGame_r1vplo.docx", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isVideoGame: true },
+            { name: "Despertar al Robot", url: "https://www.cokitos.com/despertar-al-robot-robot-awake/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
+            { name: "Programar al Panda", url: "https://www.cokitos.com/programar-al-panda/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
+            { name: "Seasonland", url: "https://www.cokitos.com/seasonland/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
+            { name: "Code.org Minecraft", url: "https://studio.code.org/es/courses/minecraft/units/1/lessons/1/levels/2", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isCode: true },
+            { name: "CORREOS PRACTICA", url: "https://jp-zeu-2007.github.io/PAGINA048/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGmail: true },
+            { name: "CORREOS ELECTRONICOS PRESENTACION", url: "https://res.cloudinary.com/dmis07evg/raw/upload/v1788753181/El-Mundo-del-Correo-Electr%C3%B3nico_gxmshx.ppsx", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isEmail: true }
+          ],
+          subfolders: [
+            {
+              name: "Recursos Videojuego",
+              type: "image",
+              img: "https://res.cloudinary.com/dmis07evg/image/upload/v1783309247/png-clipart-character-sprite-animation-computer-software-texture-mapping-sprite-game-photography-1010965056-removebg-preview_kmyghg.png"
+            }
+          ]
+        },
+        sexto: {
+          pages: [
+            { name: "Página 6to (1)", url: "https://jp-zeu-2007.github.io/PAGINA26/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 6to (2)", url: "https://jp-zeu-2007.github.io/PAGINA031/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Página 6to (3)", url: "https://jp-zeu-2007.github.io/PAGINA040/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Code.org Minecraft", url: "https://studio.code.org/es/courses/minecraft/units/1/lessons/1/levels/2", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isCode: true }
+          ],
+          subfolders: [
+            {
+              name: "EJEMPLOS",
+              type: "folder",
+              pages: [
+                { name: "PRESENTACION 1", url: "https://drive.google.com/file/d/1T6JNYc9thj9d56LpaBiGZsa0UYGHz7Tu/view?usp=sharing", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+                { name: "PRESENTACION 2", url: "https://drive.google.com/file/d/1i2RBrGWbZWyJ0NDnuVa1jqcEdEZL13d5/view?usp=sharing", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+                { name: "PRESENTACION 3", url: "https://drive.google.com/file/d/1EY_AQhbUgL-pGuVi6fjC86ifQdCdxR-2/view?usp=sharing", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
+              ]
+            }
+          ]
+        },
+        primeroBasico: [
+          { name: "Code.org Minecraft", url: "https://studio.code.org/es/courses/minecraft/units/1/lessons/1/levels/2", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isCode: true }
+        ],
+        terceroBasico: [
+          { 
+            name: "Documento 3ro. Básico", 
+            url: "https://drive.google.com/file/d/1aXOtATzAUtPg-N5ZUkO2s1-mkwdt2gS-/view?usp=sharing", 
+            img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png",
+            isPDF: true 
+          },
+          { name: "Code.org Minecraft", url: "https://studio.code.org/es/courses/minecraft/units/1/lessons/1/levels/2", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isCode: true },
+          { name: "3ro Básico Ztudia", url: "https://jp-zeu-2007.github.io/3ro-Basico-Ztudia/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" }
+        ]
+      };
 
-            // Construir todas las galerías
-            galerias.forEach(config => buildGaleria(config));
+      const videoGamePreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="85" viewBox="0 0 150 85"><rect width="150" height="85" fill="#1a1a2e"/><text x="75" y="38" font-size="22" text-anchor="middle" fill="#e94560">🎮</text><text x="75" y="58" font-size="10" text-anchor="middle" fill="#00d2ff">VIDEOJUEGO</text></svg>');
 
-        })();
-    </script>
+      const gamePreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="85" viewBox="0 0 150 85"><rect width="150" height="85" fill="#1a2744"/><text x="75" y="38" font-size="22" text-anchor="middle" fill="#fbbf24">🕹️</text><text x="75" y="58" font-size="10" text-anchor="middle" fill="#fcd34d">JUEGO</text></svg>');
+
+      const typingPreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="85" viewBox="0 0 150 85"><rect width="150" height="85" fill="#1a2744"/><text x="75" y="38" font-size="22" text-anchor="middle" fill="#60a5fa">⌨️</text><text x="75" y="58" font-size="10" text-anchor="middle" fill="#93c5fd">MECANOGRAFÍA</text></svg>');
+
+      const codePreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="85" viewBox="0 0 150 85"><rect width="150" height="85" fill="#1a2744"/><text x="75" y="38" font-size="22" text-anchor="middle" fill="#10b981">💻</text><text x="75" y="58" font-size="10" text-anchor="middle" fill="#6ee7b7">PROGRAMACIÓN</text></svg>');
+
+      const gmailPreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="85" viewBox="0 0 150 85"><rect width="150" height="85" fill="#1a2744"/><text x="75" y="38" font-size="22" text-anchor="middle" fill="#ea4335">📧</text><text x="75" y="58" font-size="10" text-anchor="middle" fill="#fbbc04">GMAIL</text></svg>');
+
+      const pptPreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="85" viewBox="0 0 150 85"><rect width="150" height="85" fill="#1a2744"/><text x="75" y="38" font-size="22" text-anchor="middle" fill="#d04423">📊</text><text x="75" y="58" font-size="10" text-anchor="middle" fill="#ff6b4a">POWERPOINT</text></svg>');
+
+      const emailPreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="85" viewBox="0 0 150 85"><rect width="150" height="85" fill="#1a2744"/><text x="75" y="38" font-size="22" text-anchor="middle" fill="#4285f4">📧</text><text x="75" y="58" font-size="10" text-anchor="middle" fill="#34a853">CORREOS</text></svg>');
+
+      const pdfPreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="85" viewBox="0 0 150 85"><rect width="150" height="85" fill="#1a2744"/><text x="75" y="38" font-size="22" text-anchor="middle" fill="#ef4444">📕</text><text x="75" y="58" font-size="10" text-anchor="middle" fill="#fca5a5">PDF</text></svg>');
+
+      window.openGrade = function(gradeName, gradeKey) {
+        document.getElementById('foldersView').classList.add('hidden');
+        document.getElementById('previewPanel').classList.remove('hidden');
+        document.getElementById('gradeTitle').textContent = '📂 ' + gradeName;
+        const container = document.getElementById('pagesContainer');
+        container.innerHTML = '';
+        
+        const data = pagesData[gradeKey];
+        
+        if (!data || (Array.isArray(data) && data.length === 0) || (data && data.pages && data.pages.length === 0 && (!data.subfolders || data.subfolders.length === 0))) {
+          container.innerHTML = '<p style="color:#b4c0e0;width:100%;text-align:center;padding:2rem;">✨ Próximamente más páginas aquí.</p>';
+          return;
+        }
+
+        if (data && data.pages) {
+          data.pages.forEach(function(page) {
+            const a = document.createElement('a');
+            a.href = page.url;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.className = 'page-preview';
+            if (page.isPpt || page.isEmail) {
+              a.setAttribute('download', '');
+            }
+            
+            const img = document.createElement('img');
+            if (page.isVideoGame) img.src = videoGamePreviewImg;
+            else if (page.isGame) img.src = gamePreviewImg;
+            else if (page.isTyping) img.src = typingPreviewImg;
+            else if (page.isCode) img.src = codePreviewImg;
+            else if (page.isGmail) img.src = gmailPreviewImg;
+            else if (page.isPpt) img.src = pptPreviewImg;
+            else if (page.isEmail) img.src = emailPreviewImg;
+            else img.src = page.img;
+            img.alt = page.name;
+            img.className = 'preview-img';
+            
+            const info = document.createElement('div');
+            info.className = 'preview-info';
+            info.textContent = page.name;
+            
+            a.appendChild(img);
+            a.appendChild(info);
+            container.appendChild(a);
+          });
+
+          if (data.subfolders) {
+            data.subfolders.forEach(function(sub) {
+              if (sub.type === 'folder') {
+                const folderDiv = document.createElement('div');
+                folderDiv.className = 'subfolder-card';
+                
+                const folderImg = document.createElement('img');
+                folderImg.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="85" viewBox="0 0 150 85"><rect width="150" height="85" fill="#1a2744"/><text x="75" y="38" font-size="22" text-anchor="middle" fill="#a78bfa">📁</text><text x="75" y="58" font-size="10" text-anchor="middle" fill="#c4b5fd">CARPETA</text></svg>');
+                folderImg.alt = sub.name;
+                folderImg.className = 'preview-img';
+                
+                const folderInfo = document.createElement('div');
+                folderInfo.className = 'preview-info';
+                folderInfo.textContent = '📁 ' + sub.name;
+                
+                folderDiv.appendChild(folderImg);
+                folderDiv.appendChild(folderInfo);
+                
+                folderDiv.onclick = function() {
+                  const currentPanel = document.getElementById('pagesContainer');
+                  currentPanel.innerHTML = '';
+                  
+                  sub.pages.forEach(function(subPage) {
+                    const subA = document.createElement('a');
+                    subA.href = subPage.url;
+                    subA.target = '_blank';
+                    subA.rel = 'noopener noreferrer';
+                    subA.className = 'page-preview';
+                    
+                    const subImg = document.createElement('img');
+                    subImg.src = subPage.img;
+                    subImg.alt = subPage.name;
+                    subImg.className = 'preview-img';
+                    
+                    const subInfo = document.createElement('div');
+                    subInfo.className = 'preview-info';
+                    subInfo.textContent = subPage.name;
+                    
+                    subA.appendChild(subImg);
+                    subA.appendChild(subInfo);
+                    currentPanel.appendChild(subA);
+                  });
+                  
+                  const backToGradeBtn = document.createElement('button');
+                  backToGradeBtn.className = 'back-button';
+                  backToGradeBtn.textContent = '← Volver a ' + gradeName;
+                  backToGradeBtn.onclick = function() {
+                    window.openGrade(gradeName, gradeKey);
+                  };
+                  currentPanel.appendChild(backToGradeBtn);
+                };
+                
+                container.appendChild(folderDiv);
+              } else if (sub.type === 'image') {
+                const div = document.createElement('div');
+                div.className = 'subfolder-card';
+                div.onclick = function() {
+                  window.open(sub.img, '_blank');
+                };
+                
+                const img = document.createElement('img');
+                img.src = sub.img;
+                img.alt = sub.name;
+                img.className = 'preview-img';
+                
+                const info = document.createElement('div');
+                info.className = 'preview-info';
+                info.textContent = '📁 ' + sub.name;
+                
+                div.appendChild(img);
+                div.appendChild(info);
+                container.appendChild(div);
+              }
+            });
+          }
+        } else if (Array.isArray(data)) {
+          data.forEach(function(page) {
+            const cardContainer = document.createElement('div');
+            cardContainer.style.display = 'flex';
+            cardContainer.style.flexDirection = 'column';
+            cardContainer.style.alignItems = 'center';
+            
+            const a = document.createElement('a');
+            a.href = page.url;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.className = 'page-preview';
+            if (page.isPpt || page.isEmail) {
+              a.setAttribute('download', '');
+            }
+            
+            const img = document.createElement('img');
+            if (page.isPDF) img.src = pdfPreviewImg;
+            else if (page.isGame) img.src = gamePreviewImg;
+            else if (page.isTyping) img.src = typingPreviewImg;
+            else if (page.isCode) img.src = codePreviewImg;
+            else if (page.isGmail) img.src = gmailPreviewImg;
+            else if (page.isPpt) img.src = pptPreviewImg;
+            else if (page.isEmail) img.src = emailPreviewImg;
+            else img.src = page.img;
+            img.alt = page.name;
+            img.className = 'preview-img';
+            
+            const info = document.createElement('div');
+            info.className = 'preview-info';
+            info.textContent = page.name;
+            
+            a.appendChild(img);
+            a.appendChild(info);
+            cardContainer.appendChild(a);
+            
+            if (page.isPDF) {
+              const downloadBtn = document.createElement('button');
+              downloadBtn.className = 'download-button';
+              downloadBtn.textContent = '⬇ Descargar';
+              downloadBtn.onclick = function(e) {
+                e.stopPropagation();
+                const fileId = page.url.match(/\/d\/(.*?)\//)?.[1];
+                if (fileId) window.open('https://drive.google.com/uc?export=download&id=' + fileId, '_blank');
+              };
+              cardContainer.appendChild(downloadBtn);
+            }
+            
+            container.appendChild(cardContainer);
+          });
+        }
+      };
+
+      window.backToFolders = function() {
+        document.getElementById('previewPanel').classList.add('hidden');
+        document.getElementById('foldersView').classList.remove('hidden');
+        document.getElementById('pagesContainer').innerHTML = '';
+      };
+    })();
+  </script>
 </body>
 </html>
