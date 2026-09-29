@@ -61,8 +61,43 @@
       text-align: center;
       letter-spacing: -0.5px;
       color: #e0e7ff;
-      margin-bottom: 2rem;
+      margin-bottom: 1.2rem;
       line-height: 1.2;
+    }
+
+    /* Botón EXAMEN grande y amarillo */
+    .exam-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      color: #1a1a1a;
+      font-weight: 800;
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      letter-spacing: 3px;
+      padding: 1rem 3.5rem;
+      border-radius: 3rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.7), 0 8px 20px rgba(0, 0, 0, 0.5);
+      border: 3px solid #fde68a;
+      margin-bottom: 2rem;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      animation: examPulse 1.8s infinite;
+      cursor: pointer;
+    }
+
+    .exam-button:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 40px rgba(251, 191, 36, 1), 0 10px 25px rgba(0, 0, 0, 0.6);
+      background: linear-gradient(135deg, #fcd34d 0%, #fbbf24 100%);
+    }
+
+    .exam-button:active {
+      transform: scale(1.02);
+    }
+
+    @keyframes examPulse {
+      0%, 100% { box-shadow: 0 0 25px rgba(251, 191, 36, 0.7), 0 8px 20px rgba(0, 0, 0, 0.5); }
+      50% { box-shadow: 0 0 45px rgba(251, 191, 36, 1), 0 8px 20px rgba(0, 0, 0, 0.5); }
     }
 
     .folders-grid {
@@ -293,6 +328,10 @@
       .page-preview, .subfolder-card {
         width: 130px;
       }
+      .exam-button {
+        padding: 0.8rem 2rem;
+        letter-spacing: 2px;
+      }
     }
   </style>
 </head>
@@ -306,6 +345,9 @@
     </div>
 
     <h1 class="main-title">Zona Del Laboratorio de Computación</h1>
+
+    <!-- Botón EXAMEN grande y amarillo -->
+    <a href="https://jp-zeu-2007.github.io/PAGINA-EXAMENES/" target="_blank" rel="noopener noreferrer" class="exam-button">📝 EXAMEN</a>
 
     <div id="foldersView" class="folders-grid">
       <div class="folder-card folder-2" onclick="openGrade('2do Primaria', 'segundo')">
@@ -364,7 +406,7 @@
 
   <script>
     (function() {
-      // ----- PÁGINAS (2do Primaria actualizado con nuevas páginas) -----
+      // ----- PÁGINAS (3ro Primaria actualizado con PAGINA-EXAMENES/word) -----
       const pagesData = {
         segundo: {
           pages: [
@@ -396,6 +438,7 @@
             { name: "Página 3ro (4)", url: "https://jp-zeu-2007.github.io/PAGINA032/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
             { name: "Página 3ro (5)", url: "https://jp-zeu-2007.github.io/PAGINA036/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
             { name: "Página 3ro (6)", url: "https://jp-zeu-2007.github.io/PAGINA050/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png" },
+            { name: "Word Examen", url: "https://jp-zeu-2007.github.io/PAGINA-EXAMENES/word/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isWord: true },
             { name: "Despertar al Robot", url: "https://www.cokitos.com/despertar-al-robot-robot-awake/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
             { name: "Programar al Panda", url: "https://www.cokitos.com/programar-al-panda/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
             { name: "Seasonland", url: "https://www.cokitos.com/seasonland/play/", img: "https://res.cloudinary.com/dmis07evg/image/upload/q_auto/f_auto/v1776731623/logo-white_hmxpau.png", isGame: true },
@@ -492,7 +535,7 @@
 
       const emailPreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="85" viewBox="0 0 150 85"><rect width="150" height="85" fill="#1a2744"/><text x="75" y="38" font-size="22" text-anchor="middle" fill="#4285f4">📧</text><text x="75" y="58" font-size="10" text-anchor="middle" fill="#34a853">CORREOS</text></svg>');
 
-      const wordPreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="85" viewBox="0 0 150 85"><rect width="150" height="85" fill="#1a2744"/><text x="75" y="38" font-size="22" text-anchor="middle" fill="#2b579a">📝</text><text x="75" y="58" font-size="10" text-anchor="middle" fill="#4a7ebb">WORDPAD</text></svg>');
+      const wordPreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="85" viewBox="0 0 150 85"><rect width="150" height="85" fill="#1a2744"/><text x="75" y="38" font-size="22" text-anchor="middle" fill="#2b579a">📝</text><text x="75" y="58" font-size="10" text-anchor="middle" fill="#4a7ebb">WORD</text></svg>');
 
       const pdfPreviewImg = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="85" viewBox="0 0 150 85"><rect width="150" height="85" fill="#1a2744"/><text x="75" y="38" font-size="22" text-anchor="middle" fill="#ef4444">📕</text><text x="75" y="58" font-size="10" text-anchor="middle" fill="#fca5a5">PDF</text></svg>');
 
